@@ -18,7 +18,11 @@ public class MecanumDrivetrain extends SubsystemBase {
   private WPI_TalonFX m_topRight = new WPI_TalonFX(Config.kTopRightID);
   private WPI_TalonFX m_bottomLeft = new WPI_TalonFX(Config.kBottomLeftID);
   private WPI_TalonFX m_bottomRight = new WPI_TalonFX(Config.kBottomRightID);
+
   private MecanumDrive m_drive = new MecanumDrive(m_topLeft, m_bottomLeft, m_topRight, m_bottomRight);
+
+  
+
   public MecanumDrivetrain() {
     m_topRight.setInverted(true);
     m_bottomRight.setInverted(true);
