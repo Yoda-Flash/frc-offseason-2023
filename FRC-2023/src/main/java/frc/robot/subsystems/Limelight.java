@@ -17,15 +17,32 @@ public class Limelight extends SubsystemBase {
   NetworkTableEntry tX = table.getEntry("tx");
   NetworkTableEntry tY = table.getEntry("ty");
   NetworkTableEntry tA = table.getEntry("ta");
+  NetworkTableEntry tV = table.getEntry("tv");
   
   double x = tX.getDouble(0.0);
   double y = tY.getDouble(0.0);
   double area = tA.getDouble(0.0);
+  int validTarget = (int) tV.getInteger(0);
 
   public Limelight() {
-
+  
   }
 
+  public int getTV(){
+    return validTarget;
+  }
+
+  public double getTX(){
+    return x;
+  }
+
+  public double getTY(){
+    return y;
+  }
+
+  public double getTA(){
+    return area;
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
