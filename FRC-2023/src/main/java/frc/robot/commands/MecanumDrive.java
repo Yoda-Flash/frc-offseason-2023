@@ -18,6 +18,8 @@ public class MecanumDrive extends CommandBase {
   }
   private MecanumDrivetrain m_drivetrain;
   private Joystick m_joystick;
+
+  
   double xSpeed = m_joystick.getRawAxis(Config.kLeftStickX)*Config.kXSpeedMultiplier;
   double ySpeed = m_joystick.getRawAxis(Config.kLeftStickY)*Config.kYSpeedMultiplier;
   double zRotation = m_joystick.getRawAxis(Config.kRightStickX)*Config.kZRotationMultiplier;
