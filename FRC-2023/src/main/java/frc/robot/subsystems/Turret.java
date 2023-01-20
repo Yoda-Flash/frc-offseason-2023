@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
@@ -30,10 +31,19 @@ public class Turret extends SubsystemBase {
     jankServo.set(angle);
   }
   
+  public double getBaseAngle() {
+    return baseServo.get();
+    // do the thing that gets it from [0, 1]
+  }
 
+  public double getRotationAngle() {
+    return jankServo.get();
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Base Servo", getBaseAngle());
+    SmartDashboard.putNumber("Jank Servo", getRotationAngle());
   }
 }
