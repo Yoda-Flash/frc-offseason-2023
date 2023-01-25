@@ -18,7 +18,7 @@ public class ArcadeDrive extends CommandBase {
   private Drivetrain m_drivetrain;
   private Joystick m_joystick;
   double speed = m_joystick.getRawAxis(Config.kRightStickX)*Config.kSpeedMultiplier;
-  double turn = m_joystick.getRawAxis(Config.kLeftStickY)*Config.kTurnMultiplier;
+  double turn = -m_joystick.getRawAxis(Config.kLeftStickY)*Config.kTurnMultiplier;
   
   public ArcadeDrive(Drivetrain drivetrain, Joystick joystick) {
     m_drivetrain = drivetrain;
