@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.TestServo;
 import frc.robot.commands.TrackTarget;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
@@ -24,13 +25,14 @@ public class RobotContainer {
     public static final int kJoystickID = 1;
   }
   // The robot's subsystems and commands are defined here...
-  private Drivetrain m_drivetrain = new Drivetrain();
-  private Joystick m_joystick = new Joystick(Config.kJoystickID); 
-  private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain, m_joystick);
+  //private Drivetrain m_drivetrain = new Drivetrain();
+  //private Joystick m_joystick = new Joystick(Config.kJoystickID); 
+  //private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain, m_joystick);
 
   private Limelight m_limelight = new Limelight();
   private Turret m_turret = new Turret();
-  private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
+  //private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
+  private TestServo m_test = new TestServo();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -56,6 +58,6 @@ public class RobotContainer {
   public Command getTeleopCommand(){
     //m_drivetrain.setDefaultCommand(m_arcadeDrive);
     // m_limelight.setDefaultCommand(m_track);
-    return null;
+    return m_test;
   }
 }
