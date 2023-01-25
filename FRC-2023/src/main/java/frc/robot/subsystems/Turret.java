@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Turret extends SubsystemBase {
   /** Creates a new Turret. */
-  private static final int baseServoPort = 1;
+  private static final int baseServoPort = 9;
   private static final int jankServoPort = 0;
 
   private Servo baseServo = new Servo(baseServoPort);

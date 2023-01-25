@@ -32,7 +32,7 @@ public class RobotContainer {
   private Limelight m_limelight = new Limelight();
   private Turret m_turret = new Turret();
   //private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
-  private TestServo m_test = new TestServo();
+  private TestServo m_test = new TestServo(m_turret);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -58,6 +58,7 @@ public class RobotContainer {
   public Command getTeleopCommand(){
     //m_drivetrain.setDefaultCommand(m_arcadeDrive);
     // m_limelight.setDefaultCommand(m_track);
-    return m_test;
+    m_turret.setDefaultCommand(m_test);
+    return null;
   }
 }
