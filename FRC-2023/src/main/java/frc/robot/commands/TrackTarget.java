@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
@@ -12,6 +13,9 @@ public class TrackTarget extends CommandBase {
 
   private Limelight m_limelight;
   private Turret m_turret;
+
+  double basePosition;
+  double jankPosition;
 
   /** Creates a new TrackTarget. */
   public TrackTarget(Limelight limelight, Turret turret) {
@@ -25,41 +29,62 @@ public class TrackTarget extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    basePosition = 0.7;
+    jankPosition = 0.6;
+    
+    m_turret.setBaseAngle(basePosition);
+    m_turret.setRotationAngle(jankPosition);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    if (m_limelight.getTV() == 1) {
+    SmartDashboard.putNumber("Base Servo", basePosition);
+    SmartDashboard.putNumber("Jank Servo", jankPosition);
+    SmartDashboard.putNumber("TX", m_limelight.getTX());
+    SmartDashboard.putNumber("TY", m_limelight.getTY());
+    
+    // if (m_limelight.getTV() == 1) {
+    //   System.out.println("Get TV == 1");
+
       if (m_limelight.getTX() > 0.05) {
         //If object is to the right and if servo isn't at maximum right position
-        if (m_turret.getBaseAngle() < 1){
-          m_turret.setBaseAngle(m_turret.getBaseAngle() + 0.01);
+        if (basePosition > 0.4){
+          basePosition -= 0.05;
+          m_turret.setBaseAngle(basePosition);
+          System.out.println("Move Right");
         }
       }
 
       else if (m_limelight.getTX() < -0.05){
-        if (m_turret.getBaseAngle() > 0){
-          m_turret.setBaseAngle(m_turret.getBaseAngle() - 0.01);
+        if (basePosition < 1){
+          basePosition += 0.05;
+          m_turret.setBaseAngle(basePosition);
+          System.out.println("Move Left");
         }
       }
 
       else if (m_limelight.getTY() > 0.05){
-        if (m_turret.getRotationAngle() < 1){
-          m_turret.setRotationAngle(m_turret.getRotationAngle() + 0.01);
+        if (jankPosition > 0){
+          jankPosition -= 0.05;
+          m_turret.setRotationAngle(jankPosition);
+          System.out.println("Move Up");
         }
       }
       
       else if (m_limelight.getTY() < -0.05){
-        if (m_turret.getRotationAngle() > 0){
-          m_turret.setRotationAngle(m_turret.getRotationAngle() - 0.01);
+        if (jankPosition < 1){
+          jankPosition += 0.05;
+          m_turret.setRotationAngle(jankPosition);
+          System.out.println("Move Down");
         }
 
       }
     }
 
-  }
+  // }
 
   // Called once the command ends or is interrupted.
   @Override

@@ -31,6 +31,8 @@ public class TestServo extends CommandBase {
   public void initialize() {
     m_timer.start(); 
     m_timer.reset();
+    SmartDashboard.putNumber("Test Base Servo", 0);
+    SmartDashboard.putNumber("Test Jank Servo", 0);
     //m_turret.setBaseAngle(0);
     //m_turret.setRotationAngle(0);
   }
@@ -38,9 +40,9 @@ public class TestServo extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_timer.hasElapsed(1)) m_turret.setRotationAngle(1);
-    // m_turret.setBaseAngle(1);
-    // m_turret.setRotationAngle(1);
+    // if (m_timer.hasElapsed(1)) m_turret.setRotationAngle(1);
+    m_turret.setBaseAngle(SmartDashboard.getNumber("Test Base Servo", 0));
+    m_turret.setRotationAngle(SmartDashboard.getNumber("Test Jank Servo", 0));
    
   }
 
@@ -54,6 +56,6 @@ public class TestServo extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_timer.hasElapsed(2);
+    return false;
   }
 }

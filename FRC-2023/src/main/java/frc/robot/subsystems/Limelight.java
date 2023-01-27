@@ -14,15 +14,15 @@ public class Limelight extends SubsystemBase {
   /** Creates a new Limelight. */
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  NetworkTableEntry tX = table.getEntry("tx");
-  NetworkTableEntry tY = table.getEntry("ty");
-  NetworkTableEntry tA = table.getEntry("ta");
-  NetworkTableEntry tV = table.getEntry("tv");
-  
-  double x = tX.getDouble(0.0);
-  double y = tY.getDouble(0.0);
-  double area = tA.getDouble(0.0);
-  int validTarget = (int) tV.getInteger(0);
+  NetworkTableEntry tx = table.getEntry("tx");
+  NetworkTableEntry ty = table.getEntry("ty");
+  NetworkTableEntry ta = table.getEntry("ta");
+  NetworkTableEntry tv = table.getEntry("tv");
+
+  int validTarget = (int) tv.getInteger(0);
+  double x;
+  double y;
+  double area;
 
   public Limelight() {
   
@@ -43,9 +43,14 @@ public class Limelight extends SubsystemBase {
   public double getTA(){
     return area;
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+  x = tx.getDouble(0.0);
+  y = ty.getDouble(0.0);
+  area = ta.getDouble(0.0);
 
     SmartDashboard.putNumber("Limelight", x);
     SmartDashboard.putNumber("Limelight", y);
