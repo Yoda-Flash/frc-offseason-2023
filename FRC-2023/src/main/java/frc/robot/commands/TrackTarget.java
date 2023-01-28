@@ -30,6 +30,8 @@ public class TrackTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_limelight.turnOn();
+
     basePosition = 0.7;
     jankPosition = 0.6;
     
@@ -49,34 +51,42 @@ public class TrackTarget extends CommandBase {
     // if (m_limelight.getTV() == 1) {
     //   System.out.println("Get TV == 1");
 
-      if (m_limelight.getTX() > 0.05) {
+      if (m_limelight.getTX() > 1.5) {
         //If object is to the right and if servo isn't at maximum right position
+        System.out.println("Object to the right");
+
         if (basePosition > 0.4){
-          basePosition -= 0.05;
+          basePosition -= 0.005;
           m_turret.setBaseAngle(basePosition);
           System.out.println("Move Right");
         }
       }
 
-      else if (m_limelight.getTX() < -0.05){
+      else if (m_limelight.getTX() < -1.5){
+        System.out.println("Object to the left");
+
         if (basePosition < 1){
-          basePosition += 0.05;
+          basePosition += 0.005;
           m_turret.setBaseAngle(basePosition);
           System.out.println("Move Left");
         }
       }
 
-      else if (m_limelight.getTY() > 0.05){
+      if (m_limelight.getTY() > 1.5){
+        System.out.println("Object above");
+
         if (jankPosition > 0){
-          jankPosition -= 0.05;
+          jankPosition -= 0.005;
           m_turret.setRotationAngle(jankPosition);
           System.out.println("Move Up");
         }
       }
       
-      else if (m_limelight.getTY() < -0.05){
+      else if (m_limelight.getTY() < -1.5){
+        System.out.println("Object below");
+
         if (jankPosition < 1){
-          jankPosition += 0.05;
+          jankPosition += 0.005;
           m_turret.setRotationAngle(jankPosition);
           System.out.println("Move Down");
         }
@@ -88,7 +98,9 @@ public class TrackTarget extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_limelight.turnOff();
+  }
 
   // Returns true when the command should end.
   @Override
