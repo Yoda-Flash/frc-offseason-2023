@@ -20,6 +20,7 @@ public class Limelight extends SubsystemBase {
   // NetworkTableEntry tv = table.getEntry("tv");
 
   double validTarget;
+
   double x;
   double y;
   double area;
@@ -66,9 +67,11 @@ public class Limelight extends SubsystemBase {
     area = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("ta").getDouble(0);
     validTarget = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("tv").getDouble(0);
 
+
   // x = tx.getDouble(0.0);
   // y = ty.getDouble(0.0);
   // area = ta.getDouble(0.0);
+
 
     SmartDashboard.putNumber("Limelight X", x);
     SmartDashboard.putNumber("Limelight Y", y);

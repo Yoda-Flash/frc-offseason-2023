@@ -14,8 +14,9 @@ public class TrackTarget extends CommandBase {
   private Limelight m_limelight;
   private Turret m_turret;
 
-  double basePosition;
-  double jankPosition;
+  private double basePosition;
+  private double jankPosition;
+  // added private 1/26/2023
 
   /** Creates a new TrackTarget. */
   public TrackTarget(Limelight limelight, Turret turret) {
@@ -47,6 +48,7 @@ public class TrackTarget extends CommandBase {
     SmartDashboard.putNumber("Jank Servo", jankPosition);
     SmartDashboard.putNumber("TX", m_limelight.getTX());
     SmartDashboard.putNumber("TY", m_limelight.getTY());
+    SmartDashboard.putNumber("TV", (double)m_limelight.getTV()); // casting
     
     // if (m_limelight.getTV() == 1) {
     //   System.out.println("Get TV == 1");
