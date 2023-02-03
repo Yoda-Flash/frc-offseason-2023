@@ -11,9 +11,9 @@ import frc.robot.subsystems.Elevator;
 public class EncoderTest extends CommandBase {
 
   private Elevator m_elevator; 
-  double m_encoderPositionUp;
-  double m_encoderPositionDown;
-  boolean goneUp;
+  private double m_encoderPositionUp;
+  private double m_encoderPositionDown;
+  private boolean goneUp;
 
   /** Creates a new EncoderTest. */
   public EncoderTest(Elevator elevator) {
