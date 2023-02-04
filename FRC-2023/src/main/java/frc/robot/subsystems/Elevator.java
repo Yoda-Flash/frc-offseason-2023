@@ -24,6 +24,9 @@ public class Elevator extends SubsystemBase {
   private DigitalInput m_topSwitch = new DigitalInput(0);
   private DigitalInput m_bottomSwitch = new DigitalInput(1);
 
+  double m_encoderPositionDown;
+  double m_encoderPositionUp;
+
   public Elevator() {
 
   }
@@ -50,6 +53,22 @@ public class Elevator extends SubsystemBase {
 
   public void resetEncoderTicks(){
     m_motor.getEncoder().setPosition(0);
+  }
+
+  public void setEncoderPositionUp(double MaxPosition){
+   m_encoderPositionUp = MaxPosition;
+  }
+
+  public void setEncoderPositionDown(double MinPosition){
+    m_encoderPositionDown = MinPosition;
+  }
+
+  public double getEncoderPositionUp(){
+    return m_encoderPositionUp;
+  }
+
+  public double getEncoderPositionDown(){
+    return m_encoderPositionDown;
   }
 
   @Override
