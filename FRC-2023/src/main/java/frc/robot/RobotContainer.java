@@ -6,10 +6,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.TestServo;
-import frc.robot.commands.TrackTarget;
+import frc.robot.commands.Drivetrain.ArcadeDrive;
+import frc.robot.commands.Elevator.EncoderTest;
+import frc.robot.commands.Elevator.JoystickElevator;
+import frc.robot.commands.Limelight.TestServo;
+import frc.robot.commands.Limelight.TrackTarget;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,13 +29,17 @@ public class RobotContainer {
   }
   // The robot's subsystems and commands are defined here...
   //private Drivetrain m_drivetrain = new Drivetrain();
-  //private Joystick m_joystick = new Joystick(Config.kJoystickID); 
+  private Joystick m_joystick = new Joystick(Config.kJoystickID); 
   //private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain, m_joystick);
 
-  private Limelight m_limelight = new Limelight();
-  private Turret m_turret = new Turret();
-  private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
+  // private Limelight m_limelight = new Limelight();
+  // private Turret m_turret = new Turret();
+  // private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
   // private TestServo m_test = new TestServo(m_turret);
+
+  private Elevator m_elevator = new Elevator();
+  // private JoystickElevator m_joystickElevator = new JoystickElevator(m_elevator, m_joystick);
+  private EncoderTest m_encoderTest = new EncoderTest(m_elevator);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -57,9 +64,14 @@ public class RobotContainer {
   }
   public Command getTeleopCommand(){
     //m_drivetrain.setDefaultCommand(m_arcadeDrive);
+
     // m_limelight.setDefaultCommand(m_track);
     // m_turret.setDefaultCommand(m_test);
-    m_track.schedule();
+    //m_track.schedule();
+
+    //m_joystickElevator.schedule();
+    m_encoderTest.schedule();
+
     return null;
   }
 }
