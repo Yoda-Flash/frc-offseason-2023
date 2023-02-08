@@ -6,7 +6,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.Drivetrain.ArcadeDrive;
+import frc.robot.commands.Drivetrain.DriveForward;
 import frc.robot.commands.Elevator.EncoderTest;
 import frc.robot.commands.Elevator.JoystickElevator;
 import frc.robot.commands.Limelight.TestServo;
@@ -26,9 +28,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   private static final class Config{
     public static final int kJoystickID = 1;
+    public static final int kForwardJoystickButtonID = 5;
   }
   // The robot's subsystems and commands are defined here...
-  //private Drivetrain m_drivetrain = new Drivetrain();
+  private Drivetrain m_drivetrain = new Drivetrain();
   private Joystick m_joystick = new Joystick(Config.kJoystickID); 
   //private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain, m_joystick);
 
@@ -36,11 +39,14 @@ public class RobotContainer {
   // private Turret m_turret = new Turret();
   // private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
   // private TestServo m_test = new TestServo(m_turret);
-
+  
   private Elevator m_elevator = new Elevator();
   // private JoystickElevator m_joystickElevator = new JoystickElevator(m_elevator, m_joystick);
   private EncoderTest m_encoderTest = new EncoderTest(m_elevator);
   
+
+  private JoystickButton m_forwardButton = new JoystickButton(m_joystick, Config.kForwardJoystickButtonID);
+  private DriveForward m_driveForward = new DriveForward(m_drivetrain, m_forwardButton);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -52,12 +58,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    m_forwardButton.onTrue(m_driveForward);
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
-   */
+  */
  public Command getAutonomousCommand() {
    // An ExampleCommand will run in autonomous
     return null;
