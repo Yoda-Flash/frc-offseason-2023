@@ -12,16 +12,26 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RollerIntake extends SubsystemBase {
   public static final class Config{
-  public static final int k_intakeMontorID = 5;
+  public static final int k_intakeMotorID = 5;
   public static final double k_intakeSpeed = .4;
   }
   /** Creates a new RollerIntake. */
-  private JoystickButton m_intakeIn;
-  private JoystickButton m_intakeOut;
-  private CANSparkMax m_intakeMotor = new CANSparkMax(Config.k_intakeMontorID, MotorType.kBrushless); 
-  public RollerIntake(JoystickButton intakeIn, JoystickButton intakeOut) {
-    m_intakeIn = intakeIn;
-    m_intakeOut = intakeOut;
+  private CANSparkMax m_intakeMotor = new CANSparkMax(Config.k_intakeMotorID, MotorType.kBrushless); 
+
+  public RollerIntake() {
+    m_intakeMotor.setInverted(true);
+  }
+
+  public void setForward(){
+    m_intakeMotor.set(Config.k_intakeSpeed);
+  }
+
+  public void setReverse(){
+    m_intakeMotor.set(-Config.k_intakeSpeed);
+  }
+
+  public void setOff(){
+    m_intakeMotor.set(0);
   }
 
   @Override
