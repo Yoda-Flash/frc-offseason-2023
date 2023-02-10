@@ -47,6 +47,7 @@ public class RobotContainer {
 
   private JoystickButton m_forwardButton = new JoystickButton(m_joystick, Config.kForwardJoystickButtonID);
   private DriveForward m_driveForward = new DriveForward(m_drivetrain, m_forwardButton);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
