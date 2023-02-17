@@ -24,7 +24,7 @@ public class ArmDown extends CommandBase {
   public void execute() {
     if(m_arm.getLowerLimit()) {m_arm.setSpeed(-.05);}
     else m_arm.setSpeed(0);}
-  }
+  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -35,6 +35,6 @@ public class ArmDown extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-  return m_arm.getLowerLimit();
+    return !m_arm.getLowerLimit();
   }
 }
