@@ -11,8 +11,11 @@ import frc.robot.commands.Drivetrain.ArcadeDrive;
 import frc.robot.commands.Drivetrain.DriveForward;
 import frc.robot.commands.Elevator.EncoderTest;
 import frc.robot.commands.Elevator.JoystickElevator;
+import frc.robot.commands.IntakeArm.ArmDown;
+import frc.robot.commands.IntakeArm.GoToAngle;
 import frc.robot.commands.Limelight.TestServo;
 import frc.robot.commands.Limelight.TrackTarget;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Limelight;
@@ -29,10 +32,15 @@ public class RobotContainer {
   private static final class Config{
     public static final int kJoystickID = 1;
     public static final int kForwardJoystickButtonID = 5;
+    public static final int kArmUpButtonID = 0;
+    public static final int kArmDownButtonID = 3;
+    
+    public static final double kArmSetpoint = 7;
   }
   // The robot's subsystems and commands are defined here...
   private Drivetrain m_drivetrain = new Drivetrain();
   private Joystick m_joystick = new Joystick(Config.kJoystickID); 
+
   //private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain, m_joystick);
 
   // private Limelight m_limelight = new Limelight();
@@ -44,14 +52,20 @@ public class RobotContainer {
   // private JoystickElevator m_joystickElevator = new JoystickElevator(m_elevator, m_joystick);
   private EncoderTest m_encoderTest = new EncoderTest(m_elevator);
   
-
+  // Joystick buttons
   private JoystickButton m_forwardButton = new JoystickButton(m_joystick, Config.kForwardJoystickButtonID);
   private DriveForward m_driveForward = new DriveForward(m_drivetrain, m_forwardButton);
+  private Arm m_arm = new Arm();
+  private JoystickButton m_ArmUpButton = new JoystickButton(m_joystick, Config.kArmUpButtonID);
+  private JoystickButton m_ArmDownButton = new JoystickButton(m_joystick, Config.kArmDownButtonID);
+  private GoToAngle m_goToAngle = new GoToAngle(m_arm, Config.kArmSetpoint);
+  private ArmDown m_armDown = new ArmDown();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -61,6 +75,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     m_forwardButton.onTrue(m_driveForward);
+    m_ArmUpButton.onTrue(m_goToAngle);
+    m_ArmDownButton.onTrue(m_armDown);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
