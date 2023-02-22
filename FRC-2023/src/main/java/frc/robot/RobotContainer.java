@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.Drivetrain.ArcadeDrive;
 import frc.robot.commands.Drivetrain.DriveForward;
+import frc.robot.commands.Drivetrain.DriveForwardPID;
 import frc.robot.commands.Elevator.EncoderTest;
 import frc.robot.commands.Elevator.JoystickElevator;
 import frc.robot.commands.IntakeArm.ArmDown;
@@ -55,11 +56,14 @@ public class RobotContainer {
   // Joystick buttons
   private JoystickButton m_forwardButton = new JoystickButton(m_joystick, Config.kForwardJoystickButtonID);
   private DriveForward m_driveForward = new DriveForward(m_drivetrain, m_forwardButton);
+
   private Arm m_arm = new Arm();
   private JoystickButton m_ArmUpButton = new JoystickButton(m_joystick, Config.kArmUpButtonID);
   private JoystickButton m_ArmDownButton = new JoystickButton(m_joystick, Config.kArmDownButtonID);
   private GoToAngle m_goToAngle = new GoToAngle(m_arm, Config.kArmSetpoint);
   private ArmDown m_armDown = new ArmDown();
+
+  private DriveForwardPID m_drivePID = new DriveForwardPID(m_drivetrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -85,6 +89,7 @@ public class RobotContainer {
   */
  public Command getAutonomousCommand() {
    // An ExampleCommand will run in autonomous
+    m_drivePID.schedule();
     return null;
   }
   public Command getTeleopCommand(){
