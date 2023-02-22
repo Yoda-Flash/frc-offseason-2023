@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Elevator.ElevatorExtensionModes;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 
@@ -12,11 +13,15 @@ public class OneThirdExtensionElevator extends CommandBase {
   private static final class Config{
     public static final double kSpeed = 0.5;
     public static final double kP = 0.05;
+    public static final double kI = 0;
+    public static final double kD = 0;
   }
 
   private Elevator m_elevator;
-  private double m_error = m_elevator.getEncoderPositionUp()/3;
-  private double m_encoderTicks = m_elevator.getEncoderTicks();
+  private PIDController m_controller = new PIDController(Config.kP, Config.kI, Config.kD);
+  
+  private double m_setpoint = m_elevator.getEncoderPositionUp()/3;
+  private double m_encoderTicks;
   
   /** Creates a new OneThirdExtensionElevator. */
   public OneThirdExtensionElevator(Elevator elevator) {
@@ -32,7 +37,9 @@ public class OneThirdExtensionElevator extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_elevator.setMotor(Config.kP*(m_error - m_encoderTicks));
+    m_encoderTicks = m_elevator.getEncoderTicks();
+
+    m_elevator.setMotor(m_controller.calculate(m_encoderTicks, m_setpoint));
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +51,6 @@ public class OneThirdExtensionElevator extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_error - m_encoderTicks <= 10;
+    return m_setpoint - m_encoderTicks <= 10;
   }
 }
