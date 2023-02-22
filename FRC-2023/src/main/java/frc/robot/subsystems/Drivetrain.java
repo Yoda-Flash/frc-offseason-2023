@@ -26,11 +26,19 @@ public class Drivetrain extends SubsystemBase {
     m_rightPrimary.setInverted(false);
     m_rightSecondary.setInverted(false);
   }
+
   public DifferentialDrive getDrive(){
     return m_drive;
   }
  
-  
+  public double getTicks(){
+    return m_leftPrimary.getSelectedSensorPosition();
+  }
+
+  public void resetTicks(){
+    m_leftPrimary.setSelectedSensorPosition(0.0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
