@@ -38,7 +38,8 @@ public class DriveForwardPID extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.getDrive().tankDrive(m_controller.calculate(m_drivetrain.getTicks(), m_setpoint), m_controller.calculate(m_drivetrain.getTicks(), m_setpoint));
+    double speed = m_controller.calculate(m_drivetrain.getTicks(), m_setpoint);
+    m_drivetrain.getDrive().tankDrive(speed, speed, false);
   }
 
   // Called once the command ends or is interrupted.

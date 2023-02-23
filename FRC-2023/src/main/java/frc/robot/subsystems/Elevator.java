@@ -32,9 +32,8 @@ public class Elevator extends SubsystemBase {
   }
 
   public void setMotor(double speed){
-
-    if (!m_topSwitch.get()) m_motor.set(0);
-    else if (!m_bottomSwitch.get()) m_motor.set(0);
+    if (!m_topSwitch.get() && speed > 0) m_motor.set(0);
+    else if (!m_bottomSwitch.get() && speed < 0) m_motor.set(0);
     else m_motor.set(speed);
 
   }
