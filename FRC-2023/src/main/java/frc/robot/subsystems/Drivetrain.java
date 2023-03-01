@@ -4,14 +4,16 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.music.Orchestra;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   private static final class Config{
     public static final int kLeftPrimaryID = 1;
-    public static final int kRightPrimaryID = 2;
-    public static final int kLeftSecondaryID = 3;
+    public static final int kRightPrimaryID = 3;
+    public static final int kLeftSecondaryID = 2;
     public static final int kRightSecondaryID = 4;
   }
   private WPI_TalonFX m_leftPrimary = new WPI_TalonFX(Config.kLeftPrimaryID);

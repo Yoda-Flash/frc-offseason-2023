@@ -61,7 +61,7 @@ public class Limelight extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     var table = NetworkTableInstance.getDefault().getTable("limelight-ahs");
-    System.out.println("DEBUG: " + table.getEntry("pipeline").setDouble(1));
+    // System.out.println("DEBUG: " + table.getEntry("pipeline").setDouble(1));
     x = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("tx").getDouble(0);
     y = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("ty").getDouble(0);
     area = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("ta").getDouble(0);
