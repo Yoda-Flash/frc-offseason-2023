@@ -19,7 +19,7 @@ public class ForwardForTime extends CommandBase {
   private Timer m_timer;
   private double m_time;
 
-  public ForwardForTime(JoystickButton button, Drivetrain drivetrain, double time ) {
+  public ForwardForTime(Drivetrain drivetrain, double time) {
     // Use addRequirements() here to declare subsystem dependencies.
     
     m_drivetrain = drivetrain;

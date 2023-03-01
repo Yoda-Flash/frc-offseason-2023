@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.Drivetrain.ArcadeDrive;
 import frc.robot.commands.Drivetrain.DriveForward;
 import frc.robot.commands.Drivetrain.DriveForwardPID;
+import frc.robot.commands.Drivetrain.ForwardForTime;
 import frc.robot.commands.Elevator.EncoderTest;
 import frc.robot.commands.Elevator.JoystickElevator;
 import frc.robot.commands.IntakeArm.ArmDown;
@@ -38,9 +39,11 @@ public class RobotContainer {
     public static final int kForwardJoystickButtonID = 5;
     public static final int kArmUpButtonID = 0;
     public static final int kArmDownButtonID = 3;
-    
+    public static final int kForwardForTimeButtonID = 0; //placeholder
     public static final double kArmSetpoint = 7;
+    public static final double kTime = 0;
   }
+
   // The robot's subsystems and commands are defined here...
   private Drivetrain m_drivetrain = new Drivetrain();
   private Joystick m_joystick = new Joystick(Config.kJoystickID); 
@@ -66,6 +69,10 @@ public class RobotContainer {
   // private JoystickButton m_ArmDownButton = new JoystickButton(m_joystick, Config.kArmDownButtonID);
   // private GoToAngle m_goToAngle = new GoToAngle(m_arm, Config.kArmSetpoint);
   // private ArmDown m_armDown = new ArmDown();
+  // private ForwardForTime m_ForwardForTime = new ForwardForTime(m_drivetrain,  3);
+
+  // private JoystickButton m_ForwardForTimeButton = new JoystickButton(m_joystick, Config.kForwardForTimeButtonID);
+  
 
   // private DriveForwardPID m_drivePID = new DriveForwardPID(m_drivetrain);
 
@@ -83,6 +90,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // m_ForwardForTimeButton.onTrue(m_ForwardForTime);
     // m_forwardButton.onTrue(m_driveForward);
     // m_ArmUpButton.onTrue(m_goToAngle);
     // m_ArmDownButton.onTrue(m_armDown);
