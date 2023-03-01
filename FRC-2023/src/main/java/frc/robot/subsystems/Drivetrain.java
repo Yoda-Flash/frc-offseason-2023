@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.music.Orchestra;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Drivetrain extends SubsystemBase {
@@ -21,6 +22,8 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX m_leftSecondary = new WPI_TalonFX(Config.kLeftSecondaryID);
   private WPI_TalonFX m_rightSecondary = new WPI_TalonFX(Config.kRightSecondaryID);
   private DifferentialDrive m_drive = new DifferentialDrive(m_leftPrimary, m_rightPrimary);
+
+  private ADXRS450_Gyro m_gyro  = new ADXRS450_Gyro();
   
   public Drivetrain() {
     m_leftSecondary.follow(m_leftPrimary);
@@ -39,6 +42,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetTicks(){
     m_leftPrimary.setSelectedSensorPosition(0.0);
+  }
+
+  public double getGyroAngle(){
+    return m_gyro.getAngle();
   }
 
   @Override
