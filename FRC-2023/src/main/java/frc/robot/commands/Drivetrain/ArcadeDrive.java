@@ -10,7 +10,7 @@ public class ArcadeDrive extends CommandBase {
   /** Creates a new ArcadeDrive. */
   private static final class Config{
     
-    private static final int kRightStickX = 2;
+    private static final int kRightStickZ = 3;
     private static final int kLeftStickY = 1;
     private static final double kSpeedMultiplier = 0.7;
     private static final double kTurnMultiplier = 0.7;
@@ -30,7 +30,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = m_joystick.getRawAxis(Config.kRightStickX)*Config.kSpeedMultiplier;
+    double speed = m_joystick.getRawAxis(Config.kRightStickZ)*Config.kSpeedMultiplier;
     double turn = m_joystick.getRawAxis(Config.kLeftStickY)*Config.kTurnMultiplier;
     m_drivetrain.getDrive().arcadeDrive(speed, turn, true);
   }
