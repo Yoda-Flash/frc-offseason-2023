@@ -10,7 +10,8 @@ import frc.robot.subsystems.DistanceSensors;
 
 public class ProtectElectricalWithUltrasonics extends CommandBase {
   private static final class Config{
-    public static final double kSafeDistance = 10.0;
+    public static final double kSafeDistanceInches = 10.0;
+    public static final double kSafeDistanceCM = 25.4;
   }
 
   private DistanceSensors m_sensors;
@@ -31,7 +32,7 @@ public class ProtectElectricalWithUltrasonics extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_sensors.getDistanceInches() <= Config.kSafeDistance){
+    if (m_sensors.getDistanceCM() <= Config.kSafeDistanceCM){
       SmartDashboard.putString("Is electrical board safe?", "No!!!Get away now");
     }
     else SmartDashboard.putString("Is electrical board safe?", "Yes");

@@ -36,8 +36,8 @@ public class DistanceSensors extends SubsystemBase {
   }
 
   public double getDistanceInches(){
-    double m_measurement = m_pRUltrasonic.getRangeInches();
-    double m_filteredMeasurement = m_filter.calculate(m_measurement);
+    double m_inchesMeasurement = m_pRUltrasonic.getRangeInches();
+    double m_filteredMeasurement = m_filter.calculate(m_inchesMeasurement);
     return m_filteredMeasurement;
   }
 
@@ -51,6 +51,11 @@ public class DistanceSensors extends SubsystemBase {
 
   public double getAIScaledValue(){
     return m_potentiometer.get();
+  }
+
+  public double getDistanceCM(){
+    double m_CMMeasurement = m_aIUltrasonic.getVoltage()/(9.77*0.001);
+    return m_CMMeasurement;
   }
 
   @Override
