@@ -6,27 +6,35 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DistanceSensors extends SubsystemBase {
 
-  private AnalogInput m_ultrasonic = new AnalogInput(3);
-  private AnalogPotentiometer m_potentiometer = new AnalogPotentiometer(m_ultrasonic);
+  //For analog input ultrasonic
+  private AnalogInput m_aIUltrasonic = new AnalogInput(3);
+  private AnalogPotentiometer m_potentiometer = new AnalogPotentiometer(m_aIUltrasonic);
+
+  //For Ping Response ultrasonic
+  private Ultrasonic m_pRUltrasonic = new Ultrasonic(1, 2);
 
   /** Creates a new DistanceSensors. */
   public DistanceSensors() {
-
   }
 
-  public int getRawUltrasonicValue(){
-    return m_ultrasonic.getValue();
+  public double getDistanceInches(){
+    return m_pRUltrasonic.getRangeInches();
+  }
+
+  public int getRawAIUltrasonicValue(){
+    return m_aIUltrasonic.getValue();
   }
   
-  public double getUltrasonicVoltage(){
-    return m_ultrasonic.getVoltage();
+  public double getAIUltrasonicVoltage(){
+    return m_aIUltrasonic.getVoltage();
   }
 
-  public double getScaledValue(){
+  public double getAIScaledValue(){
     return m_potentiometer.get();
   }
 
