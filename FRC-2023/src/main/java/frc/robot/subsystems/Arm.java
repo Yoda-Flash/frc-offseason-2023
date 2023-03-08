@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Arm extends SubsystemBase {
   private static class Config{
 
-    public static final int kArmMotorID = 7;
+    public static final int kArmMotorID = 6;
     public static final double kAnglePerTick = 8;
 
   }
