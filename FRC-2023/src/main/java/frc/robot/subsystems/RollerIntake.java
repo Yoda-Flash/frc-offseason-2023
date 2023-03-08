@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RollerIntake extends SubsystemBase {
   
   private static final class Config{
-  public static final int kConeIntakeMotorID = 5;
-  public static final int kCubeIntakeMotorID = 6;
+  public static final int kConeIntakeMotorID = 7;
+  public static final int kCubeIntakeMotorID = 8;
   public static final double kIntakeSpeed = 0.4;
   }
 

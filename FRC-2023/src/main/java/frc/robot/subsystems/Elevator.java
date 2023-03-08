@@ -16,7 +16,7 @@ public class Elevator extends SubsystemBase {
 
   private static final class Config{
 
-    public static final int kMotorID = 0;
+    public static final int kMotorID = 5;
 
   }
 
