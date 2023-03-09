@@ -28,8 +28,11 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain() {
     m_leftSecondary.follow(m_leftPrimary);
     m_rightSecondary.follow(m_rightPrimary);
-    m_rightPrimary.setInverted(false);
-    m_rightSecondary.setInverted(false);
+    
+    m_rightPrimary.setInverted(true);
+    m_rightSecondary.setInverted(true);
+    m_leftPrimary.setInverted(true);
+    m_leftSecondary.setInverted(true);
   }
 
   public DifferentialDrive getDrive(){

@@ -20,7 +20,7 @@ public class Elevator extends SubsystemBase {
 
   }
 
-  private CANSparkMax m_motor = new CANSparkMax(Config.kMotorID, MotorType.kBrushless);
+  private CANSparkMax m_elevatorMotor = new CANSparkMax(Config.kMotorID, MotorType.kBrushless);
   private DigitalInput m_topSwitch = new DigitalInput(0);
   private DigitalInput m_bottomSwitch = new DigitalInput(1);
 
@@ -32,9 +32,9 @@ public class Elevator extends SubsystemBase {
   }
 
   public void setMotor(double speed){
-    if (!m_topSwitch.get() && speed > 0) m_motor.set(0);
-    else if (!m_bottomSwitch.get() && speed < 0) m_motor.set(0);
-    else m_motor.set(speed);
+    if (!m_topSwitch.get() && speed > 0) m_elevatorMotor.set(0);
+    else if (!m_bottomSwitch.get() && speed < 0) m_elevatorMotor.set(0);
+    else m_elevatorMotor.set(speed);
 
   }
 
@@ -47,11 +47,11 @@ public class Elevator extends SubsystemBase {
   }
 
   public double getEncoderTicks(){
-    return m_motor.getEncoder().getPosition();
+    return m_elevatorMotor.getEncoder().getPosition();
   }
 
   public void resetEncoderTicks(){
-    m_motor.getEncoder().setPosition(0);
+    m_elevatorMotor.getEncoder().setPosition(0);
   }
 
   public void setEncoderPositionUp(double MaxPosition){

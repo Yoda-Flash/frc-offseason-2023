@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Turret extends SubsystemBase {
+public class LimelightTestTurret extends SubsystemBase {
   /** Creates a new Turret. */
   private static final int baseServoPort = 9;
   private static final int jankServoPort = 0;
@@ -18,7 +18,7 @@ public class Turret extends SubsystemBase {
 
   // private Joystick m_joystick;
 
-  public Turret() {
+  public LimelightTestTurret() {
     // m_joystick = joystick;
   }
 

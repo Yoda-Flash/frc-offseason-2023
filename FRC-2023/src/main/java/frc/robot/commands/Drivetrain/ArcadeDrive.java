@@ -10,7 +10,7 @@ public class ArcadeDrive extends CommandBase {
   /** Creates a new ArcadeDrive. */
   private static final class Config{
     
-    private static final int kRightStickZ = 3;
+    private static final int kRightStickZ = 2;
     private static final int kLeftStickY = 1;
     private static final double kSpeedMultiplier = 0.7;
     private static final double kTurnMultiplier = 0.7;

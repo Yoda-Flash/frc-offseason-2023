@@ -7,19 +7,19 @@ package frc.robot.commands.Limelight;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.LimelightTestTurret;
 
 public class TrackTarget extends CommandBase {
 
   private Limelight m_limelight;
-  private Turret m_turret;
+  private LimelightTestTurret m_turret;
 
   private double basePosition;
   private double jankPosition;
   // added private 1/26/2023
 
   /** Creates a new TrackTarget. */
-  public TrackTarget(Limelight limelight, Turret turret) {
+  public TrackTarget(Limelight limelight, LimelightTestTurret turret) {
 
     m_limelight = limelight;
     m_turret = turret;

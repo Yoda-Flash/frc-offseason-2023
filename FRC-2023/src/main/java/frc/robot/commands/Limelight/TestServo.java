@@ -8,16 +8,16 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.LimelightTestTurret;
 
 public class TestServo extends CommandBase {
 
   private Timer m_timer = new Timer();
-  private Turret m_turret;
+  private LimelightTestTurret m_turret;
  // private Joystick m_joystick;
   
   /** Creates a new TestServo. */
-  public TestServo(Turret turret) {
+  public TestServo(LimelightTestTurret turret) {
 
     m_turret = turret;
    // m_joystick = joystick;
