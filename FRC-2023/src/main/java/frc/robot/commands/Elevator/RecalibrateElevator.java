@@ -28,7 +28,7 @@ public class RecalibrateElevator extends CommandBase {
   @Override
   public void execute() {
     
-    if (m_elevator.getLowerLimit()) m_elevator.setMotor(-0.5);
+    if (!m_elevator.getLowerLimit()) m_elevator.setMotor(0.2);
     else m_elevator.setMotor(0);
 
   }
@@ -43,6 +43,6 @@ public class RecalibrateElevator extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_elevator.getLowerLimit();
+    return m_elevator.getLowerLimit();
   }
 }

@@ -9,6 +9,7 @@ import java.time.Instant;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -18,7 +19,7 @@ public class RollerIntake extends SubsystemBase {
   private static final class Config{
   public static final int kConeIntakeMotorID = 7;
   public static final int kCubeIntakeMotorID = 8;
-  public static final double kIntakeSpeed = 0.4;
+  public static final double kIntakeSpeed = 0.6;
   }
 
   /** Creates a new RollerIntake. */
@@ -28,6 +29,14 @@ public class RollerIntake extends SubsystemBase {
   public RollerIntake() {
     m_cubeIntakeMotor.setInverted(true);
     m_coneIntakeMotor.setInverted(true);
+
+    //Sets current limits to 20 (stall) and 30 (free)
+    m_coneIntakeMotor.setSmartCurrentLimit(15, 15);
+    m_cubeIntakeMotor.setSmartCurrentLimit(15, 15);
+    
+
+    m_coneIntakeMotor.burnFlash();
+    m_cubeIntakeMotor.burnFlash();
   }
 
   public void setConeForward(){
@@ -78,8 +87,41 @@ public class RollerIntake extends SubsystemBase {
     return new InstantCommand(this::setConeOff, this);
   }
 
+  //Combined intake code
+  public void setIntakeIn() {
+    m_coneIntakeMotor.set(Config.kIntakeSpeed);
+    m_cubeIntakeMotor.set(Config.kIntakeSpeed);
+  }
+
+  public InstantCommand turnOnIntake() {
+    return new InstantCommand(this::setIntakeIn, this);
+  }
+
+  public void setIntakeOut() {
+    m_coneIntakeMotor.set(-Config.kIntakeSpeed);
+    m_cubeIntakeMotor.set(-Config.kIntakeSpeed);
+  }
+
+  public InstantCommand turnEjectIntake() {
+    return new InstantCommand(this::setIntakeOut, this);
+  }
+  
+  public void setIntakeOff() {
+    m_coneIntakeMotor.set(0);
+    m_cubeIntakeMotor.set(0);
+  }
+
+  public InstantCommand turnOffIntake() {
+    return new InstantCommand(this::setIntakeOff, this);
+  }
+
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Cone Motor Temperature", m_coneIntakeMotor.getMotorTemperature());
+    SmartDashboard.putNumber("Cube Motor Temperature", m_cubeIntakeMotor.getMotorTemperature());
+
+    SmartDashboard.putNumber("Cone Motor Current", m_coneIntakeMotor.getOutputCurrent());
+    SmartDashboard.putNumber("Cone Motor Current", m_coneIntakeMotor.getOutputCurrent());
     // This method will be called once per scheduler run
   }
 }

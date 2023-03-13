@@ -5,20 +5,23 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class MoveForTime extends CommandBase {
   private static final class Config{
-    public static final double kSpeedMultiplier = 0.7;
+    public static final double kSpeed = 0.4;
   }
   private Drivetrain m_drivetrain;
   private Timer m_timer;
-  private double m_targetTimeInSecs = 10;
+  private double m_targetTimeInSecs;
 
   /** Creates a new MoveForTime. */
-  public MoveForTime(Drivetrain drivetrain) {
+  public MoveForTime(Drivetrain drivetrain, double timeInSecs) {
     m_drivetrain = drivetrain;
+    m_timer = new Timer();
+    m_targetTimeInSecs = timeInSecs;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrain);
   }
@@ -33,7 +36,8 @@ public class MoveForTime extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.getDrive().arcadeDrive(1*Config.kSpeedMultiplier, 0);
+    SmartDashboard.putNumber("Auto Forward Timer", m_timer.get());
+    m_drivetrain.getDrive().arcadeDrive(-Config.kSpeed, 0);
   }
 
   // Called once the command ends or is interrupted.

@@ -26,7 +26,7 @@ public class RecalibrateArm extends CommandBase {
   @Override
   public void execute() {
     
-    if (m_arm.getLowerLimit()) m_arm.setSpeed(-0.5);
+    if (!m_arm.getLowerLimit()) m_arm.setSpeed(-0.15);
     else m_arm.setSpeed(0);
 
   }
@@ -35,12 +35,12 @@ public class RecalibrateArm extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_arm.setSpeed(0);
-    m_arm.setEncoderTicks(0);
+    m_arm.resetEncoderTicks();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !m_arm.getLowerLimit();
+    return m_arm.getLowerLimit();
   }
 }

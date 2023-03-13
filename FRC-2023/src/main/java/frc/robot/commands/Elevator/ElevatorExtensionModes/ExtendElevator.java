@@ -5,14 +5,15 @@
 package frc.robot.commands.Elevator.ElevatorExtensionModes;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Elevator;
 
-public class HalfExtensionElevator extends CommandBase {
+public class ExtendElevator extends CommandBase {
 
   private static final class Config{
-    public static final double kSpeed = 0.5;
-    public static final double kP = 0.05;
+    // public static final double kSpeed = 0.5;
+    public static final double kP = 0.0125;
     public static final double kI = 0;
     public static final double kD = 0;
   }
@@ -20,12 +21,14 @@ public class HalfExtensionElevator extends CommandBase {
   private Elevator m_elevator;
   private PIDController m_controller = new PIDController(Config.kP, Config.kI, Config.kD);
 
-  private double m_setpoint = m_elevator.getEncoderPositionUp()/2;
+  private double m_setpoint;
   private double m_encoderTicks;
+  private double m_speed;
   
   /** Creates a new HalfExtensionElevator. */
-  public HalfExtensionElevator(Elevator elevator) {
+  public ExtendElevator(Elevator elevator, double angle) {
     m_elevator = elevator;
+    m_setpoint = angle; //NOTE, this is in encoder ticks (ideally a fracion of max encoder ticks)
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_elevator);
   }
@@ -38,8 +41,11 @@ public class HalfExtensionElevator extends CommandBase {
   @Override
   public void execute() {
     m_encoderTicks = m_elevator.getEncoderTicks();
-    
-    m_elevator.setMotor(m_controller.calculate(m_encoderTicks, m_setpoint));
+    m_speed = m_controller.calculate(m_encoderTicks, m_setpoint);
+    if (m_speed < -0.5) m_speed = -0.5;
+    SmartDashboard.putNumber("Calculated Speed", m_speed);
+
+    m_elevator.setMotor(m_speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -51,6 +57,6 @@ public class HalfExtensionElevator extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_setpoint - m_encoderTicks <= 10;
+    return false;
   }
 }
