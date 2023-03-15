@@ -33,10 +33,10 @@ public class DetectConeDistance extends CommandBase {
   @Override
   public void execute() {
     if (m_sensors.getDistanceCM() >= (Config.kIntakeDistance + 1)) {
-      m_drivetrain.getDrive().arcadeDrive(0.2, 0);
+      m_drivetrain.getDrive().arcadeDrive(0.4, 0);
     }
     else if (m_sensors.getDistanceCM() <= (Config.kIntakeDistance - 1)){
-      m_drivetrain.getDrive().arcadeDrive(-0.2, 0);
+      m_drivetrain.getDrive().arcadeDrive(-0.4, 0);
     }
   }
 
@@ -47,6 +47,6 @@ public class DetectConeDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_sensors.getDistanceCM() <= (Config.kIntakeDistance + 1) && m_sensors.getDistanceCM() >= (Config.kIntakeDistance - 1);
   }
 }
