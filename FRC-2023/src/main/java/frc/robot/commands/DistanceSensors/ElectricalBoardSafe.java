@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DistanceSensors;
 
-public class ProtectElectricalWithUltrasonics extends CommandBase {
+public class ElectricalBoardSafe extends CommandBase {
   private static final class Config{
     public static final double kSafeDistanceInches = 10.0;
     public static final double kSafeDistanceCM = 25.4;
@@ -16,8 +16,8 @@ public class ProtectElectricalWithUltrasonics extends CommandBase {
 
   private DistanceSensors m_sensors;
 
-  /** Creates a new ProtectElectricalWithUltrasonics. */
-  public ProtectElectricalWithUltrasonics(DistanceSensors sensors) {
+  /** Creates a new ElectricalBoardSafe. */
+  public ElectricalBoardSafe(DistanceSensors sensors) {
     m_sensors = sensors;
 
     // Use addRequirements() here to declare subsystem dependencies.
