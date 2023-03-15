@@ -33,7 +33,7 @@ public class ElectricalBoardSafe extends CommandBase {
   @Override
   public void execute() {
     if (m_sensors.getDistanceCM() <= Config.kSafeDistanceCM){
-      SmartDashboard.putString("Is electrical board safe?", "No!!!Get away now");
+      SmartDashboard.putString("Is electrical board safe?", "No!!! Get away now");
     }
     else SmartDashboard.putString("Is electrical board safe?", "Yes");
   }

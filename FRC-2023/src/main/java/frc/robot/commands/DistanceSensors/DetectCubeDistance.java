@@ -5,6 +5,8 @@
 package frc.robot.commands.DistanceSensors;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DistanceSensors;
+import frc.robot.subsystems.Drivetrain;
 
 public class DetectCubeDistance extends CommandBase {
 
