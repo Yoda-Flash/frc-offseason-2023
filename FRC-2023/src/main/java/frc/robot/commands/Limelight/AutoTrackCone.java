@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
 
-public class AutoTrackPole extends CommandBase {
-
+public class AutoTrackCone extends CommandBase {
   private Limelight m_limelight;
   private Drivetrain m_drivetrain;
-  
-  /** Creates a new AutoTrackPole. */
-  public AutoTrackPole(Limelight limelight, Drivetrain drivetrain) {
+
+  /** Creates a new AutoTrackCube. */
+  public AutoTrackCone(Limelight limelight, Drivetrain drivetrain) {
     m_limelight = limelight;
     m_drivetrain = drivetrain;
 
@@ -31,16 +30,16 @@ public class AutoTrackPole extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_limelight.getPipeline() == 1){
-     if (m_limelight.getTV() == 1.0){
-      if (m_limelight.getTX() >= 1.5){
+    if (m_limelight.getPipeline() == 2){
+      if (m_limelight.getTV() == 1.0){
+        if (m_limelight.getTX() >= 1.5){
         //If target is to the right, move to the left
         m_drivetrain.getDrive().arcadeDrive(0, -0.5);
-      }
-      if (m_limelight.getTX() <= 1.5){
+        }
+        if (m_limelight.getTX() <= 1.5){
         m_drivetrain.getDrive().arcadeDrive(0, 0.5);
+        }
       }
-     }
     }
   }
 

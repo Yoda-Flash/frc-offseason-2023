@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
+
   /** Creates a new Limelight. */
 
   // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -25,9 +26,15 @@ public class Limelight extends SubsystemBase {
   double y;
   double area;
   boolean ledMode;
+  double pipeline;
+  boolean setPipeline;
 
   public Limelight() {
   
+  }
+
+  public double getPipeline(){
+    return pipeline;
   }
 
   public double getTV(){
@@ -44,6 +51,11 @@ public class Limelight extends SubsystemBase {
 
   public double getTA(){
     return area;
+  }
+
+  public boolean setPipeline(double setPipe){
+    setPipeline = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("pipeline").setNumber(setPipe);
+    return setPipeline;
   }
 
   public boolean turnOn(){
@@ -66,7 +78,9 @@ public class Limelight extends SubsystemBase {
     y = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("ty").getDouble(0);
     area = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("ta").getDouble(0);
     validTarget = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("tv").getDouble(0);
+    pipeline = NetworkTableInstance.getDefault().getTable("limelight-ahs").getEntry("getpipe").getDouble(0);
 
+    //For pipeline setting
 
   // x = tx.getDouble(0.0);
   // y = ty.getDouble(0.0);
