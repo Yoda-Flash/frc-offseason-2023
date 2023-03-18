@@ -31,7 +31,8 @@ public class AutoTrackCube extends CommandBase {
  // Called every time the scheduler runs while the command is scheduled.
  @Override
  public void execute() {
-   if (m_limelight.getTV() == 1.0){
+  if (m_limelight.getPipeline() == 3){
+    if (m_limelight.getTV() == 1.0){
      if (m_limelight.getTX() >= 1.5){
        //If target is to the right, move to the left
        m_drivetrain.getDrive().arcadeDrive(0, -0.5);
@@ -40,6 +41,7 @@ public class AutoTrackCube extends CommandBase {
        m_drivetrain.getDrive().arcadeDrive(0, 0.5);
      }
    }
+  }
  }
 
  // Called once the command ends or is interrupted.
