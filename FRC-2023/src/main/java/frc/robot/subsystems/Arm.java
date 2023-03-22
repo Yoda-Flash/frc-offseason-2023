@@ -28,8 +28,6 @@ public class Arm extends SubsystemBase {
   private CANSparkMax m_armMotor = new CANSparkMax(Config.kArmMotorID, MotorType.kBrushless);
   private DigitalInput m_bottomSwitch = new DigitalInput(0);
 
-  private ArmFeedforward m_feedforward = new ArmFeedforward(Config.kS, Config.kG, Config.kV, Config.kA);
-
   public Arm() {
 
    //m_armMotor.setInverted(true);
@@ -61,11 +59,6 @@ public class Arm extends SubsystemBase {
 
   public void setSpeedDangerous(double speed) { //NEVER use this
     m_armMotor.set(speed);
-  }
-
-  public ArmFeedforward setFeedforward(double goalPosition, double goalVelocity){
-    m_feedforward.calculate(goalPosition, goalVelocity);
-    return m_feedforward;
   }
 
   @Override
