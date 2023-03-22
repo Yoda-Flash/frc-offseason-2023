@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -17,10 +18,17 @@ public class Arm extends SubsystemBase {
   private static class Config{
     public static final int kArmMotorID = 6;
     public static final double kArmEncoderTopLimit = 60; //In Encoder ticks
+
+    public static final double kS = 0.01;
+    public static final double kV = 0.01;
+    public static final double kG = 0.01;
+    public static final double kA = 0.01;
   }
   
   private CANSparkMax m_armMotor = new CANSparkMax(Config.kArmMotorID, MotorType.kBrushless);
   private DigitalInput m_bottomSwitch = new DigitalInput(0);
+
+  private ArmFeedforward m_feedforward = new ArmFeedforward(Config.kS, Config.kG, Config.kV, Config.kA);
 
   public Arm() {
 
@@ -53,6 +61,11 @@ public class Arm extends SubsystemBase {
 
   public void setSpeedDangerous(double speed) { //NEVER use this
     m_armMotor.set(speed);
+  }
+
+  public ArmFeedforward setFeedforward(double goalPosition, double goalVelocity){
+    m_feedforward.calculate(goalPosition, goalVelocity);
+    return m_feedforward;
   }
 
   @Override
