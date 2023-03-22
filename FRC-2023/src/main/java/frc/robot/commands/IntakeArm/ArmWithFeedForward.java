@@ -14,7 +14,7 @@ public class ArmWithFeedForward extends CommandBase {
   }
   private Arm m_arm;
 
-  private double m_goalPosition = 10*;
+  private double m_goalPosition = 10*Config.kRadiansToTicksMultiplier;
   private double m_goalVelocity = 5;
   
   /** Creates a new ArmWithFeedForward. */
@@ -29,11 +29,15 @@ public class ArmWithFeedForward extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_arm.setFeedforward(m_goalPosition, m_goalVelocity);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_arm.setSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override
