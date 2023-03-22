@@ -13,10 +13,10 @@ public class Drivetrain extends SubsystemBase {
   
   /** Creates a new Drivetrain. */
   private static final class Config{
-    public static final int kLeftPrimaryID = 1;
-    public static final int kRightPrimaryID = 3;
-    public static final int kLeftSecondaryID = 2;
-    public static final int kRightSecondaryID = 4;
+    public static final int kLeftPrimaryID = 4;
+    public static final int kRightPrimaryID = 2;
+    public static final int kLeftSecondaryID = 3;
+    public static final int kRightSecondaryID = 1;
   }
   private WPI_TalonFX m_leftPrimary = new WPI_TalonFX(Config.kLeftPrimaryID);
   private WPI_TalonFX m_rightPrimary = new WPI_TalonFX(Config.kRightPrimaryID);
@@ -24,7 +24,7 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX m_rightSecondary = new WPI_TalonFX(Config.kRightSecondaryID);
   private DifferentialDrive m_drive = new DifferentialDrive(m_leftPrimary, m_rightPrimary);
 
-  // private ADXRS450_Gyro m_gyro  = new ADXRS450_Gyro();
+  private ADXRS450_Gyro m_gyro  = new ADXRS450_Gyro();
   
   public Drivetrain() {
     m_leftSecondary.follow(m_leftPrimary);
@@ -48,9 +48,9 @@ public class Drivetrain extends SubsystemBase {
     m_leftPrimary.setSelectedSensorPosition(0.0);
   }
 
-  // public double getGyroAngle(){
-  //   return m_gyro.getAngle();
-  // }
+  public double getGyroAngle(){
+    return m_gyro.getAngle();
+  }
 
   @Override
   public void periodic() {

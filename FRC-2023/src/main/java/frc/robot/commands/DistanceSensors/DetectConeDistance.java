@@ -4,38 +4,40 @@
 
 package frc.robot.commands.DistanceSensors;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DistanceSensors;
+import frc.robot.subsystems.Drivetrain;
 
-public class ProtectElectricalWithUltrasonics extends CommandBase {
+public class DetectConeDistance extends CommandBase {
+
   private static final class Config{
-    public static final double kSafeDistanceInches = 10.0;
-    public static final double kSafeDistanceCM = 25.4;
+    public static final double kIntakeDistance = 3;
   }
-
   private DistanceSensors m_sensors;
+  private Drivetrain m_drivetrain;
 
-  /** Creates a new ProtectElectricalWithUltrasonics. */
-  public ProtectElectricalWithUltrasonics(DistanceSensors sensors) {
+  /** Creates a new DetectConeDistance. */
+  public DetectConeDistance(Drivetrain drivetrain, DistanceSensors sensors) {
     m_sensors = sensors;
+    m_drivetrain = drivetrain;
 
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-   
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_sensors.getDistanceCM() <= Config.kSafeDistanceCM){
-      SmartDashboard.putString("Is electrical board safe?", "No!!!Get away now");
+    if (m_sensors.getDistanceCM() >= (Config.kIntakeDistance + 1)) {
+      m_drivetrain.getDrive().arcadeDrive(0.4, 0);
     }
-    else SmartDashboard.putString("Is electrical board safe?", "Yes");
+    else if (m_sensors.getDistanceCM() <= (Config.kIntakeDistance - 1)){
+      m_drivetrain.getDrive().arcadeDrive(-0.4, 0);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +47,6 @@ public class ProtectElectricalWithUltrasonics extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_sensors.getDistanceCM() <= (Config.kIntakeDistance + 1) && m_sensors.getDistanceCM() >= (Config.kIntakeDistance - 1);
   }
 }
