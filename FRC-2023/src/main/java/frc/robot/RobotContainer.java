@@ -28,6 +28,7 @@ import frc.robot.commands.IntakeArm.GoToAngle;
 import frc.robot.commands.IntakeArm.GoToAngleSmart;
 import frc.robot.commands.IntakeArm.JoystickArm;
 import frc.robot.commands.IntakeArm.RecalibrateArm;
+import frc.robot.commands.Limelight.AutoTrackPole;
 import frc.robot.commands.Limelight.TestServo;
 import frc.robot.commands.Limelight.TrackTarget;
 import frc.robot.subsystems.Arm;
@@ -74,7 +75,7 @@ public class RobotContainer {
     public static final int kHighScoreID = 6;
 
     //Auto
-    public static final double kTimeInSecsShort = 4.5;
+    public static final double kTimeInSecsShort = 5;
     public static final double kTimeInSecsLong = 6.75;
 
 
@@ -184,7 +185,9 @@ public class RobotContainer {
   private CubeAuto m_cubeAutoLong = new CubeAuto(m_arm, m_rollerIntake, m_drivetrain, Config.kTimeInSecsLong);
   private CubeAuto m_simpleCubeAuto = new CubeAuto(m_arm, m_rollerIntake, m_drivetrain, 0);
 
-  // private Limelight m_limelight = new Limelight();
+  private Limelight m_limelight = new Limelight();
+  private AutoTrackPole m_autoTrack = new AutoTrackPole(m_limelight, m_drivetrain);
+
   // private Turret m_turret = new Turret();
   // private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
   // private TestServo m_test = new TestServo(m_turret);
@@ -260,7 +263,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
   */
  public Command getAutonomousCommand() {
-    return m_autoChooser.getSelected();
+    // return m_autoChooser.getSelected();
+    return m_autoTrack;
   }
   public Command getTeleopCommand(){
     m_drivetrain.setDefaultCommand(m_arcadeDrive);
