@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.time.Instant;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,6 +35,8 @@ public class RollerIntake extends SubsystemBase {
     m_coneIntakeMotor.setSmartCurrentLimit(15, 15);
     m_cubeIntakeMotor.setSmartCurrentLimit(15, 15);
     
+    m_coneIntakeMotor.setIdleMode(IdleMode.kBrake);
+    m_cubeIntakeMotor.setIdleMode(IdleMode.kBrake);
 
     m_coneIntakeMotor.burnFlash();
     m_cubeIntakeMotor.burnFlash();

@@ -13,10 +13,10 @@ public class Drivetrain extends SubsystemBase {
   
   /** Creates a new Drivetrain. */
   private static final class Config{
-    public static final int kLeftPrimaryID = 4;
-    public static final int kRightPrimaryID = 2;
-    public static final int kLeftSecondaryID = 3;
-    public static final int kRightSecondaryID = 1;
+    public static final int kLeftPrimaryID = 1;
+    public static final int kRightPrimaryID = 3;
+    public static final int kLeftSecondaryID = 2;
+    public static final int kRightSecondaryID = 4;
   }
   private WPI_TalonFX m_leftPrimary = new WPI_TalonFX(Config.kLeftPrimaryID);
   private WPI_TalonFX m_rightPrimary = new WPI_TalonFX(Config.kRightPrimaryID);

@@ -19,6 +19,7 @@ import frc.robot.commands.Drivetrain.ArcadeDrive;
 import frc.robot.commands.Drivetrain.DriveForward;
 import frc.robot.commands.Drivetrain.DriveForwardPID;
 import frc.robot.commands.Drivetrain.ForwardForTime;
+import frc.robot.commands.Drivetrain.DrivetrainIdle;
 // import frc.robot.commands.Elevator.EncoderTest;
 import frc.robot.commands.Elevator.JoystickElevator;
 import frc.robot.commands.Elevator.RecalibrateElevator;
@@ -55,6 +56,9 @@ public class RobotContainer {
     public static final int kDriverJoystickID = 0;
     public static final int kSecondJoystickID = 1;
 
+    //Driving
+    public static final int kSlowModeAxis = 3;
+
     //Intake 
     public static final int kIntakeInID = 1;
     public static final int kIntakeOutID = 2;
@@ -62,19 +66,22 @@ public class RobotContainer {
     // public static final int kCubeOutID = 4;
 
     //Elevator
-    public static final int kRecalElevatorID = 8;
+    // public static final int kRecalElevatorID = 8;
     // public static final int kHalfElevatorID = 7;
-    public static final int kTestExtendID = 7;
+    // public static final int kTestExtendID = 7;
 
     //Arm
-    public static final int kRecalibrateID = 4; //FOR BOTH ARM AND ELEVATOR
-    public static final int kArmDownID = 3; //NOTE: Conflicts with TestArm, do not use together
+    //public static final int kArmDownID = 3; //NOTE: Conflicts with TestArm, do not use together
     // public static final int kHalfArmID = 3;
-    public static final int kTestArmID = 3;
+    //public static final int kTestArmID = 3;
 
+    //Recalibrate
+    public static final int kRecalibrateID = 4; //FOR BOTH ARM AND ELEVATOR
+    
     //Scoring
     public static final int kLowScoreID = 5;
     public static final int kHighScoreID = 6;
+    public static final int kHumanPlayerID = 3;
 
     //Auto
     public static final double kTimeInSecsShort = 5;
@@ -111,63 +118,69 @@ public class RobotContainer {
   private SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
   //Joysticks
-  // private Joystick m_driveJoystick = new Joystick(Config.kDriverJoystickID); 
-  // private Joystick m_secondJoystick = new Joystick(Config.kSecondJoystickID);
+  private Joystick m_driveJoystick = new Joystick(Config.kDriverJoystickID); 
+  private Joystick m_secondJoystick = new Joystick(Config.kSecondJoystickID);
 
   // //Drivetrain (on Driver Controller)
   private Drivetrain m_drivetrain = new Drivetrain();
-  // private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain, m_driveJoystick);
+  private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain, m_driveJoystick, Config.kSlowModeAxis);
 
-  // //On Secondary controller
-  // //Intake
-  // private RollerIntake m_rollerIntake = new RollerIntake();
-  // private JoystickButton m_intakeInButton = new JoystickButton(m_secondJoystick, Config.kIntakeInID);
-  // private JoystickButton m_intakeOutButton = new JoystickButton(m_secondJoystick, Config.kIntakeOutID);
-  // // private JoystickButton m_cubeInButton = new JoystickButton(m_secondJoystick, Config.kCubeInID);
-  // // private JoystickButton m_cubeOutButton = new JoystickButton(m_secondJoystick, Config.kCubeOutID);
+  private DrivetrainIdle m_drivetrainIdle = new DrivetrainIdle(m_drivetrain);
+
+  //On Secondary controller
+  //Intake
+  private RollerIntake m_rollerIntake = new RollerIntake();
+  private JoystickButton m_intakeInButton = new JoystickButton(m_secondJoystick, Config.kIntakeInID);
+  private JoystickButton m_intakeOutButton = new JoystickButton(m_secondJoystick, Config.kIntakeOutID);
+  //private JoystickButton m_cubeInButton = new JoystickButton(m_secondJoystick, Config.kCubeInID);
+  //private JoystickButton m_cubeOutButton = new JoystickButton(m_secondJoystick, Config.kCubeOutID);
   
-  // //Elevator
-  // private Elevator m_elevator = new Elevator();
-  // // private JoystickElevator m_joystickElevator = new JoystickElevator(m_elevator, m_secondJoystick); //Change to second joystick later
+  //Elevator
+  private Elevator m_elevator = new Elevator();
+  private JoystickElevator m_joystickElevator = new JoystickElevator(m_elevator, m_secondJoystick); //Change to second joystick later
 
-  // private RecalibrateElevator m_recalibrateElevator = new RecalibrateElevator(m_elevator);
-  // private JoystickButton m_recalibrateElevButton = new JoystickButton(m_secondJoystick, Config.kRecalElevatorID);
+  private RecalibrateElevator m_recalibrateElevator = new RecalibrateElevator(m_elevator);
+  //private JoystickButton m_recalibrateElevButton = new JoystickButton(m_secondJoystick, Config.kRecalElevatorID);
 
-  // //Elevator Extensions: Pass in encoder ticks for specific angle
-  // // private ExtendElevator m_halfExtensionElevator = new ExtendElevator(m_elevator, m_elevator.getEncoderLimitUp()/2);
-  // // private JoystickButton m_halfExtendButton = new JoystickButton(m_secondJoystick, Config.kHalfElevatorID);
-  // private ExtendElevatorSmart m_lowScoreElevator = new ExtendElevatorSmart(m_elevator, -61);
-  // private ExtendElevatorSmart m_highScoreElevator = new ExtendElevatorSmart(m_elevator, -61);
-
-  // private ExtendElevatorSmart m_testExtendElevator = new ExtendElevatorSmart(m_elevator, m_elevator.getEncoderLimitUp() * 0.75);
-  // private JoystickButton m_testExtendButton = new JoystickButton(m_secondJoystick, Config.kTestExtendID);
+  //Elevator Extensions: Pass in encoder ticks for specific angle
+  //private ExtendElevator m_halfExtensionElevator = new ExtendElevator(m_elevator, m_elevator.getEncoderLimitUp()/2);
+  //private JoystickButton m_halfExtendButton = new JoystickButton(m_secondJoystick, Config.kHalfElevatorID);
+  private ExtendElevatorSmart m_lowScoreElevator = new ExtendElevatorSmart(m_elevator, -44); //Originally -61
+  private ExtendElevatorSmart m_highScoreElevator = new ExtendElevatorSmart(m_elevator, -61);
+  private ExtendElevatorSmart m_humanPlayerElevator = new ExtendElevatorSmart(m_elevator, -56);
+  //private ExtendElevatorSmart m_testExtendElevator = new ExtendElevatorSmart(m_elevator, m_elevator.getEncoderLimitUp() * 0.75);
+  //private JoystickButton m_testExtendButton = new JoystickButton(m_secondJoystick, Config.kTestExtendID);
   
-  // //Arm
-  // private Arm m_arm = new Arm();
-  // // private JoystickArm m_joystickArm = new JoystickArm(m_arm, m_secondJoystick);
+  //Arm
+  private Arm m_arm = new Arm();
+  private JoystickArm m_joystickArm = new JoystickArm(m_arm, m_secondJoystick);
 
-  // private RecalibrateArm m_recalibrateArm = new RecalibrateArm(m_arm);
-  // private ArmDown m_armDown = new ArmDown(m_arm);
-  // private JoystickButton m_armDownButton = new JoystickButton(m_secondJoystick, Config.kArmDownID);
+  private RecalibrateArm m_recalibrateArm = new RecalibrateArm(m_arm);
+  private ArmDown m_armDown = new ArmDown(m_arm);
+  //private JoystickButton m_armDownButton = new JoystickButton(m_secondJoystick, Config.kArmDownButtonID);
+  //private JoystickButton m_armUpButton = new JoystickButton(m_secondJoystick, Config.kArmUpButtonID);
 
-  // // private GoToAngle m_halfAngleArm = new GoToAngle(m_arm, m_arm.getEncoderLimitUp()/2);
-  // // private JoystickButton m_halfAngleButton = new JoystickButton(m_secondJoystick, Config.kHalfArmID);
+  private GoToAngle m_halfAngleArm = new GoToAngle(m_arm, m_arm.getEncoderLimitUp()/2);
+  //private JoystickButton m_halfAngleButton = new JoystickButton(m_secondJoystick, Config.kHalfArmID);
 
-  // private GoToAngleSmart m_lowScoreArm = new GoToAngleSmart(m_arm, 52);
-  // private GoToAngleSmart m_highScoreArm = new GoToAngleSmart(m_arm, 62);
+  private GoToAngleSmart m_lowScoreArm = new GoToAngleSmart(m_arm, 52);
+  private GoToAngleSmart m_highScoreArm = new GoToAngleSmart(m_arm, 62);
+  private GoToAngleSmart m_humanPlayerArm = new GoToAngleSmart(m_arm, 58);
   
   // private GoToAngleSmart m_testAngleArm = new GoToAngleSmart(m_arm, m_arm.getEncoderLimitUp() * 0.5);
   // private JoystickButton m_testAngleButton = new JoystickButton(m_secondJoystick, Config.kTestArmID);
 
-  // //Elevator + Arm Scoring Parallel Groups
-  // private ParallelCommandGroup m_lowScore = new ParallelCommandGroup(m_lowScoreArm, m_lowScoreElevator);
-  // private ParallelCommandGroup m_highScore = new ParallelCommandGroup(m_highScoreArm, m_highScoreElevator); 
+  //Elevator + Arm Scoring Parallel Groups
+  private ParallelCommandGroup m_lowScore = new ParallelCommandGroup(m_lowScoreArm, m_lowScoreElevator);
+  private ParallelCommandGroup m_highScore = new ParallelCommandGroup(m_highScoreArm, m_highScoreElevator); 
+  private ParallelCommandGroup m_humanPlayer = new ParallelCommandGroup(m_humanPlayerArm, m_humanPlayerElevator);
 
-  // private JoystickButton m_lowScoreButton = new JoystickButton(m_secondJoystick, Config.kLowScoreID);
-  // private JoystickButton m_highScoreButton = new JoystickButton(m_secondJoystick, Config.kHighScoreID);
+  private JoystickButton m_lowScoreButton = new JoystickButton(m_secondJoystick, Config.kLowScoreID);
+  private JoystickButton m_highScoreButton = new JoystickButton(m_secondJoystick, Config.kHighScoreID);
+  private JoystickButton m_humanPlayerButton = new JoystickButton(m_secondJoystick, Config.kHumanPlayerID);
 
-  // //recalibration
-  // private JoystickButton m_recalibrateButton = new JoystickButton(m_secondJoystick, Config.kRecalibrateID);
+  //recalibration
+  private JoystickButton m_recalibrateButton = new JoystickButton(m_secondJoystick, Config.kRecalibrateID);
 
   // /* Working arm/elevator combos:
   //  * Ground: Elevator = , Arm =
@@ -178,7 +191,7 @@ public class RobotContainer {
   //  * Shelf: Elevator = , Arm = 
   //  */
 
-  // //Auto
+  //Auto
   // private ReleaseArm m_releaseArm = new ReleaseArm(m_arm);
   // private AutoSequence m_autoSequenceShort = new AutoSequence(m_drivetrain, m_arm, Config.kTimeInSecsShort);
   // private AutoSequence m_autoSequenceLong = new AutoSequence(m_drivetrain, m_arm, Config.kTimeInSecsLong);
@@ -187,30 +200,24 @@ public class RobotContainer {
   // private CubeAuto m_cubeAutoLong = new CubeAuto(m_arm, m_rollerIntake, m_drivetrain, Config.kTimeInSecsLong);
   // private CubeAuto m_simpleCubeAuto = new CubeAuto(m_arm, m_rollerIntake, m_drivetrain, 0);
 
-  // // private Limelight m_limelight = new Limelight();
-  // // private Turret m_turret = new Turret();
-  // // private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
-  // // private TestServo m_test = new TestServo(m_turret);
-  // // Joystick buttons
-  // // private JoystickButton m_forwardButton = new JoystickButton(m_driveJoystick, Config.kForwardJoystickButtonID);
-  // // private DriveForward m_driveForward = new DriveForward(m_drivetrain, m_forwardButton);
-
-  private SendableChooser<Boolean> m_pipeChooser = new SendableChooser<>();
-
   // private Limelight m_limelight = new Limelight();
   // private Turret m_turret = new Turret();
   // private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
   // private TestServo m_test = new TestServo(m_turret);
-  // Joystick buttons
-  // private JoystickButton m_forwardButton = new JoystickButton(m_driveJoystick, Config.kForwardJoystickButtonID);
-  // private DriveForward m_driveForward = new DriveForward(m_drivetrain, m_forwardButton);
+  
+  //Joystick buttons
+  //private JoystickButton m_forwardButton = new JoystickButton(m_driveJoystick, Config.kForwardJoystickButtonID);
+  //private DriveForward m_driveForward = new DriveForward(m_drivetrain, m_forwardButton);
 
-  // // private ForwardForTime m_ForwardForTime = new ForwardForTime(m_drivetrain,  3);
-  // // private JoystickButton m_ForwardForTimeButton = new JoystickButton(m_driveJoystick, Config.kForwardForTimeButtonID);
+  private SendableChooser<Boolean> m_pipeChooser = new SendableChooser<>();
 
-  // // private DriveForwardPID m_drivePID = new DriveForwardPID(m_drivetrain);
+  private ForwardForTime m_ForwardForTime = new ForwardForTime(m_drivetrain,  3);
+  //private JoystickButton m_ForwardForTimeButton = new JoystickButton(m_driveJoystick, Config.kForwardForTimeButtonID);
+
+  private DriveForwardPID m_drivePID = new DriveForwardPID(m_drivetrain);
 
   private GyroBalance m_balance = new GyroBalance(m_drivetrain);
+  //private AutoTrackPole m_autoTrack = new AutoTrackPole(m_limelight, m_drivetrain);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -226,8 +233,9 @@ public class RobotContainer {
     // m_pipeChooser.addOption("Cone", m_limelight.setPipeline(2));
     // m_pipeChooser.addOption("Cube", m_limelight.setPipeline(3));
     // SmartDashboard.putData(m_pipeChooser);
-    // // Configure the button bindings
-    // configureButtonBindings();
+
+    // Configure the button bindings
+    configureButtonBindings();
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -236,38 +244,42 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-  //   //Intake in
-  //   m_intakeInButton.onTrue(m_rollerIntake.turnOnIntake());
-  //   m_intakeOutButton.onTrue(m_rollerIntake.turnEjectIntake());
-  //   // m_cubeInButton.onTrue(m_rollerIntake.intakeCube());
-  //   // m_cubeOutButton.onTrue(m_rollerIntake.ejectCube());
+    //Intake on
+    m_intakeInButton.onTrue(m_rollerIntake.turnOnIntake());
+    m_intakeOutButton.onTrue(m_rollerIntake.turnEjectIntake());
+    // m_cubeInButton.onTrue(m_rollerIntake.intakeCube());
+    // m_cubeOutButton.onTrue(m_rollerIntake.ejectCube());
 
-  //   //Intake out
-  //   m_intakeInButton.onFalse(m_rollerIntake.turnOffIntake());
-  //   m_intakeOutButton.onFalse(m_rollerIntake.turnOffIntake());
-  //   // m_cubeInButton.onFalse(m_rollerIntake.turnOffCube());
-  //   // m_cubeOutButton.onFalse(m_rollerIntake.turnOffCube());
+    //Intake off
+    m_intakeInButton.onFalse(m_rollerIntake.turnOffIntake());
+    m_intakeOutButton.onFalse(m_rollerIntake.turnOffIntake());
+    // m_cubeInButton.onFalse(m_rollerIntake.turnOffCube());
+    // m_cubeOutButton.onFalse(m_rollerIntake.turnOffCube());
 
-  //   //Elevator control
-  //   // m_recalibrateElevButton.onTrue(m_recalibrateElevator);
-  //   // m_halfExtendButton.onTrue(m_halfExtensionElevator);
-  //   // m_testExtendButton.onTrue(m_testExtendElevator);
+    //Recalibrate
+    m_recalibrateButton.onTrue(m_recalibrateArm);
+    m_recalibrateButton.onTrue(m_recalibrateElevator);
 
-  //   //Arm control
-  //   m_recalibrateButton.onTrue(m_recalibrateArm);
-  //   m_recalibrateButton.onTrue(m_recalibrateElevator);
-  //   // m_halfAngleButton.onTrue(m_halfAngleArm);
-  //   // m_testAngleButton.onTrue(m_testAngleArm);
-  //   m_armDownButton.onTrue(m_armDown);
+    //Score
+    m_lowScoreButton.onTrue(m_lowScore);
+    m_highScoreButton.onTrue(m_highScore);
+    m_humanPlayerButton.onTrue(m_humanPlayer);
 
-  //   //Score
-  //   m_lowScoreButton.onTrue(m_lowScore);
-  //   m_highScoreButton.onTrue(m_highScore);
+    //Elevator control
+    //m_recalibrateElevButton.onTrue(m_recalibrateElevator);
+    //m_halfExtendButton.onTrue(m_halfExtensionElevator);
+    // m_testExtendButton.onTrue(m_testExtendElevator);
 
-  //   // m_ForwardForTimeButton.onTrue(m_ForwardForTime);
-  //   // m_forwardButton.onTrue(m_driveForward);
-  //   // m_ArmUpButton.onTrue(m_goToAngle);
-  //   // m_ArmDownButton.onTrue(m_armDown);
+    //Arm control
+    //m_halfAngleButton.onTrue(m_halfAngleArm);
+    // m_testAngleButton.onTrue(m_testAngleArm);
+    //m_armDownButton.onTrue(m_armDown);
+
+    //Testing
+    // m_ForwardForTimeButton.onTrue(m_ForwardForTime);
+    // m_forwardButton.onTrue(m_driveForward);
+    // m_armUpButton.onTrue(m_lowScoreArm);
+    // m_armDownButton.onTrue(m_armDown);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -275,12 +287,15 @@ public class RobotContainer {
    * @return the command to run in autonomous
   */
  public Command getAutonomousCommand() {
-    return m_autoChooser.getSelected();
+    m_drivetrain.setDefaultCommand(m_drivetrainIdle);  
+    // return m_autoChooser.getSelected(); //Swap with sendable chooser later for choosable auto
+    //return m_autoTrack;
+    return null;
   }
 
   public Command getTeleopCommand(){
-    m_drivetrain.setDefaultCommand(m_balance);
-    // m_drivetrain.setDefaultCommand(m_arcadeDrive);
+    // m_drivetrain.setDefaultCommand(m_balance);
+    m_drivetrain.setDefaultCommand(m_arcadeDrive);
     // m_elevator.setDefaultCommand(m_joystickElevator);
     // m_arm.setDefaultCommand(m_joystickArm);
 

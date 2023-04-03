@@ -18,14 +18,16 @@ public class ArcadeDrive extends CommandBase {
     private static final double kSlowSpeedMultiplier = 0.425;
     private static final double kSlowTurnMultiplier = 0.35;
     private static final double kSlowTriggerThreshold = 0.1;
-     
   }
+
   private Drivetrain m_drivetrain;
   private Joystick m_joystick;
+  private int m_joystickAxis;
   
-  public ArcadeDrive(Drivetrain drivetrain, Joystick joystick) {
+  public ArcadeDrive(Drivetrain drivetrain, Joystick joystick, int joystickAxis) {
     m_drivetrain = drivetrain;
     m_joystick = joystick;
+    m_joystickAxis = joystickAxis;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrain);
   }
@@ -36,7 +38,7 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     double speed, turn;
-    if (m_joystick.getRawAxis(3) < Config.kSlowTriggerThreshold) {
+    if (m_joystick.getRawAxis(m_joystickAxis) < Config.kSlowTriggerThreshold) {
       speed = -m_joystick.getRawAxis(Config.kLeftStickY)*Config.kFastSpeedMultiplier;
       turn = -m_joystick.getRawAxis(Config.kRightStickZ)*Config.kFastTurnMultiplier;
     } else {
