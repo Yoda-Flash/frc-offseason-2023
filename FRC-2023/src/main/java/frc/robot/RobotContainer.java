@@ -101,7 +101,7 @@ public class RobotContainer {
      *  - A = Intake In (release for off)
      *  - B = Intake Out (release for off)
      *  - Y = Recalibrate
-     *  - X = ArmDown
+     *  - X = Shelf Pickup
      *  - Left Bumper = Low Score
      *  - Right Bumper = High Score
      */
