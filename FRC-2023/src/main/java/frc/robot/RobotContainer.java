@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // auto sequences
 import frc.robot.commands.Autonomous.AutoSequence;
-import frc.robot.commands.Autonomous.CubeAuto;
+import frc.robot.commands.Autonomous.ScoreLowAuto;
 import frc.robot.commands.Autonomous.ReleaseArm;
-
+import frc.robot.commands.Autonomous.ScoreHighAuto;
 import frc.robot.commands.Drivetrain.ArcadeDrive;
 import frc.robot.commands.Drivetrain.DriveForward;
 import frc.robot.commands.Drivetrain.DriveForwardPID;
@@ -81,7 +81,7 @@ public class RobotContainer {
     public static final int kIntakeOutID = 2;
 
     // Recalibrate
-    public static final int kRecalibrateID = 4; //FOR BOTH ARM AND ELEVATOR
+    public static final int kRecalibrateID = 8; //FOR BOTH ARM AND ELEVATOR
     
     // Scoring
     // (basically arm button ids)
@@ -89,9 +89,12 @@ public class RobotContainer {
     public static final int kHighScoreID = 6;
     public static final int kHumanPlayerID = 3;
 
+    public static final int kRetractID = 4; //FOR BOTH ARM AND ELEVATOR
+
     // Auto
-    public static final double kTimeInSecsShort = 5;
-    public static final double kTimeInSecsLong = 6.75;
+    public static final double kTimeInSecsFast = 1.1;
+    public static final double kTimeInSecsShort = 5.5;
+    public static final double kTimeInSecsLong = 7.3;
 
     /* Driver Controls:
      *  - Left Joystick = Speed
@@ -140,9 +143,8 @@ public class RobotContainer {
 
   // Elevator Extensions: Pass in encoder ticks for specific angle
   private ExtendElevatorSmart m_lowScoreElevator = new ExtendElevatorSmart(m_elevator, -44); //Originally -61
-  private ExtendElevatorSmart m_highScoreElevator = new ExtendElevatorSmart(m_elevator, -61);
+  private ExtendElevatorSmart m_highScoreElevator = new ExtendElevatorSmart(m_elevator, -59);
   private ExtendElevatorSmart m_humanPlayerElevator = new ExtendElevatorSmart(m_elevator, -56);
-  
 
   // Arm
   private Arm m_arm = new Arm();
@@ -152,10 +154,10 @@ public class RobotContainer {
 
   private GoToAngle m_halfAngleArm = new GoToAngle(m_arm, m_arm.getEncoderLimitUp()/2);
 
-  private GoToAngleSmart m_lowScoreArm = new GoToAngleSmart(m_arm, 52);
-  private GoToAngleSmart m_highScoreArm = new GoToAngleSmart(m_arm, 62);
-  private GoToAngleSmart m_humanPlayerArm = new GoToAngleSmart(m_arm, 58);
-
+  private GoToAngleSmart m_lowScoreArm = new GoToAngleSmart(m_arm, 48, m_secondJoystick);
+  private GoToAngleSmart m_highScoreArm = new GoToAngleSmart(m_arm, 60, m_secondJoystick);
+  private GoToAngleSmart m_humanPlayerArm = new GoToAngleSmart(m_arm, 56, m_secondJoystick);
+  private GoToAngleSmart m_retractArm = new GoToAngleSmart(m_arm, 1.5, m_secondJoystick);
 
   //Elevator + Arm Scoring Parallel Groups
   private ParallelCommandGroup m_lowScore = new ParallelCommandGroup(m_lowScoreArm, m_lowScoreElevator);
@@ -165,6 +167,7 @@ public class RobotContainer {
   private JoystickButton m_lowScoreButton = new JoystickButton(m_secondJoystick, Config.kLowScoreID);
   private JoystickButton m_highScoreButton = new JoystickButton(m_secondJoystick, Config.kHighScoreID);
   private JoystickButton m_humanPlayerButton = new JoystickButton(m_secondJoystick, Config.kHumanPlayerID);
+  private JoystickButton m_retractButton = new JoystickButton(m_secondJoystick, Config.kRetractID);
 
   // recalibration
   private JoystickButton m_recalibrateButton = new JoystickButton(m_secondJoystick, Config.kRecalibrateID);
@@ -186,12 +189,12 @@ public class RobotContainer {
   private AutoSequence m_autoSequenceLong = new AutoSequence(m_drivetrain, m_arm, Config.kTimeInSecsLong);
 
   // cube auto actually intakes cones it's just a naming thing
-  private CubeAuto m_cubeAutoShort = new CubeAuto(m_arm, m_rollerIntake, m_drivetrain, Config.kTimeInSecsShort);
-  private CubeAuto m_cubeAutoLong = new CubeAuto(m_arm, m_rollerIntake, m_drivetrain, Config.kTimeInSecsLong);
-  private CubeAuto m_simpleCubeAuto = new CubeAuto(m_arm, m_rollerIntake, m_drivetrain, 0);
+  private ScoreLowAuto m_lowScoreAutoShort = new ScoreLowAuto(m_arm, m_rollerIntake, m_drivetrain, Config.kTimeInSecsShort);
+  private ScoreLowAuto m_lowScoreAutoLong = new ScoreLowAuto(m_arm, m_rollerIntake, m_drivetrain, Config.kTimeInSecsLong);
+  private ScoreLowAuto m_simpleLowAuto = new ScoreLowAuto(m_arm, m_rollerIntake, m_drivetrain, 0);
 
-
-
+  private ScoreHighAuto m_simpleHighAuto = new ScoreHighAuto(m_arm, m_elevator, m_rollerIntake, m_drivetrain, 0);
+  private ScoreHighAuto m_highScoreAutoShort = new ScoreHighAuto(m_arm, m_elevator, m_rollerIntake, m_drivetrain, Config.kTimeInSecsFast);
   // private Limelight m_limelight = new Limelight();
   // private Turret m_turret = new Turret();
   // private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
@@ -212,12 +215,20 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // syntax: name, command
+    // Taxi/Simple Auto
     m_autoChooser.setDefaultOption("release_arm_auto", m_releaseArm);
-    m_autoChooser.addOption("move_back_auto_short", m_autoSequenceShort);
-    m_autoChooser.addOption("cube_auto_short", m_cubeAutoShort);
-    m_autoChooser.addOption("move_back_auto_long", m_autoSequenceLong);
-    m_autoChooser.addOption("cube_auto_long", m_cubeAutoLong);
-    m_autoChooser.addOption("simple_cube_auto", m_simpleCubeAuto);
+    m_autoChooser.addOption("move_back_auto_short", m_autoSequenceShort); //EVENTUALLY RENAME TO TAXI AUTO
+    m_autoChooser.addOption("move_back_auto_long", m_autoSequenceLong); //SEE ABOVE
+
+    // Low Score Autos
+    m_autoChooser.addOption("low_score_short", m_lowScoreAutoShort);
+    m_autoChooser.addOption("low_score_long", m_lowScoreAutoLong);
+    m_autoChooser.addOption("simple_low_auto", m_simpleLowAuto);
+
+    // High Score Autos
+    m_autoChooser.addOption("high_auto_short", m_highScoreAutoShort);
+    m_autoChooser.addOption("simple_high_auto", m_simpleHighAuto);
+
     SmartDashboard.putData(m_autoChooser);
 
     // m_pipeChooser.setDefaultOption("Reflective Tape", m_limelight.setPipeline(1));
@@ -240,21 +251,22 @@ public class RobotContainer {
     m_intakeInButton.onTrue(m_rollerIntake.turnOnIntake());
     m_intakeOutButton.onTrue(m_rollerIntake.turnEjectIntake());
 
-
     // Intake off
     m_intakeInButton.onFalse(m_rollerIntake.turnOffIntake());
     m_intakeOutButton.onFalse(m_rollerIntake.turnOffIntake());
-
 
     // Recalibrate
     m_recalibrateButton.onTrue(m_recalibrateArm);
     m_recalibrateButton.onTrue(m_recalibrateElevator);
 
-
     // Score
     m_lowScoreButton.onTrue(m_lowScore);
     m_highScoreButton.onTrue(m_highScore);
     m_humanPlayerButton.onTrue(m_humanPlayer);
+
+    // Retract Arm/Elevator
+    m_retractButton.onTrue(m_retractArm);
+    m_retractButton.onTrue(m_recalibrateElevator);
   }
 
 
@@ -270,7 +282,6 @@ public class RobotContainer {
     // return m_autoTrack; 
 
     return m_autoChooser.getSelected(); // choose actual autonomous from smart dashboard
-    // change above line later when autonomous is decided
   }
 
   public Command getTeleopCommand(){

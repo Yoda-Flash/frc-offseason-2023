@@ -71,8 +71,9 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("Arm Lower Limit", getLowerLimit());
+    SmartDashboard.putBoolean("Arm Upper Limit", getUpperLimit());
     SmartDashboard.putNumber("Arm Encoder Ticks", getEncoderTicks());
-    SmartDashboard.putNumber("Arm Rate", m_armMotor.getEncoder().getVelocity());
+    // SmartDashboard.putNumber("Arm Rate", m_armMotor.getEncoder().getVelocity());
     // This method will be called once per scheduler run
   }
 }

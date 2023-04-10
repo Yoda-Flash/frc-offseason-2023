@@ -120,11 +120,11 @@ public class RollerIntake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Cone Motor Temperature", m_coneIntakeMotor.getMotorTemperature());
-    SmartDashboard.putNumber("Cube Motor Temperature", m_cubeIntakeMotor.getMotorTemperature());
+    // SmartDashboard.putNumber("Cone Motor Temperature", m_coneIntakeMotor.getMotorTemperature());
+    // SmartDashboard.putNumber("Cube Motor Temperature", m_cubeIntakeMotor.getMotorTemperature());
 
-    SmartDashboard.putNumber("Cone Motor Current", m_coneIntakeMotor.getOutputCurrent());
-    SmartDashboard.putNumber("Cone Motor Current", m_coneIntakeMotor.getOutputCurrent());
+    // SmartDashboard.putNumber("Cone Motor Current", m_coneIntakeMotor.getOutputCurrent());
+    // SmartDashboard.putNumber("Cone Motor Current", m_coneIntakeMotor.getOutputCurrent());
     // This method will be called once per scheduler run
   }
 }

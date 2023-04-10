@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.RollerIntake;
 
-public class RunIntake extends CommandBase {
+public class RunIntakeIn extends CommandBase {
   private double startTime = 0;
   private RollerIntake m_rollerIntake;
-  /** Creates a new RunIntake. */
-  public RunIntake(RollerIntake rollerIntake) {
+  /** Creates a new RunIntakeOut. */
+  public RunIntakeIn(RollerIntake rollerIntake) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_rollerIntake = rollerIntake;
     addRequirements(m_rollerIntake);
@@ -27,7 +27,7 @@ public class RunIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_rollerIntake.setIntakeOut();
+    m_rollerIntake.setIntakeIn();
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +39,6 @@ public class RunIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Timer.getFPGATimestamp() - startTime) > 1.75;
+    return (Timer.getFPGATimestamp() - startTime) > 1.5;
   }
 }

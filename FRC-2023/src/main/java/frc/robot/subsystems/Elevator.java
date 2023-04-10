@@ -17,7 +17,7 @@ public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
 
   private static final class Config{
-    public static final double kElevatorEncoderTopLimit = -56;
+    public static final double kElevatorEncoderTopLimit = -55.65;
     public static final int kMotorID = 5;
 
   }

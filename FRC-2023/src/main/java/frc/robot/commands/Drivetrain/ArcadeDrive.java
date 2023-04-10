@@ -14,11 +14,11 @@ public class ArcadeDrive extends CommandBase {
     
     private static final int kRightStickZ = 4; //For turning
     private static final int kLeftStickY = 1; //For driving (speed)
-    private static final double kFastSpeedMultiplier = 0.9;
+    private static final double kFastSpeedMultiplier = 0.75;
     private static final double kFastTurnMultiplier = 0.7;
 
     private static final double kSlowSpeedMultiplier = 0.425;
-    private static final double kSlowTurnMultiplier = 0.35;
+    private static final double kSlowTurnMultiplier = 0.4;
     private static final double kSlowTriggerThreshold = 0.1;
   }
 
@@ -37,7 +37,7 @@ public class ArcadeDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_speedLimiter = new SlewRateLimiter(1.0/0.1, -1.0/0.1, 0.0);
+    m_speedLimiter = new SlewRateLimiter(1.0/0.25, -1.0/0.25, 0.0);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
