@@ -50,7 +50,7 @@ public class ExtendElevatorSmart extends CommandBase {
     m_setpoint = SmartDashboard.getNumber("Elevator/setpointTicks", m_default);
     m_encoderTicks = m_elevator.getEncoderTicks();
     m_speed = m_controller.calculate(m_encoderTicks, m_setpoint);
-    if (Math.abs(m_speed) > .6) m_speed = Math.signum(m_speed)*0.6;
+    if (Math.abs(m_speed) > 0.7) m_speed = Math.signum(m_speed)*0.7;
     SmartDashboard.putNumber("Calculated Speed", m_speed);
 
     m_elevator.setMotor(m_speed);

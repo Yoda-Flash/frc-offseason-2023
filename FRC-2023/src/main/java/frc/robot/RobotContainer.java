@@ -143,7 +143,7 @@ public class RobotContainer {
 
   // Elevator Extensions: Pass in encoder ticks for specific angle
   private ExtendElevatorSmart m_lowScoreElevator = new ExtendElevatorSmart(m_elevator, -44); //Originally -61
-  private ExtendElevatorSmart m_highScoreElevator = new ExtendElevatorSmart(m_elevator, -59);
+  private ExtendElevatorSmart m_highScoreElevator = new ExtendElevatorSmart(m_elevator, -57);
   private ExtendElevatorSmart m_humanPlayerElevator = new ExtendElevatorSmart(m_elevator, -56);
 
   // Arm
@@ -154,9 +154,9 @@ public class RobotContainer {
 
   private GoToAngle m_halfAngleArm = new GoToAngle(m_arm, m_arm.getEncoderLimitUp()/2);
 
-  private GoToAngleSmart m_lowScoreArm = new GoToAngleSmart(m_arm, 48, m_secondJoystick);
-  private GoToAngleSmart m_highScoreArm = new GoToAngleSmart(m_arm, 60, m_secondJoystick);
-  private GoToAngleSmart m_humanPlayerArm = new GoToAngleSmart(m_arm, 56, m_secondJoystick);
+  private GoToAngleSmart m_lowScoreArm = new GoToAngleSmart(m_arm, 46.5, m_secondJoystick); //RETEST FOR NEW VALUES
+  private GoToAngleSmart m_highScoreArm = new GoToAngleSmart(m_arm, 58, m_secondJoystick);
+  private GoToAngleSmart m_humanPlayerArm = new GoToAngleSmart(m_arm, 55, m_secondJoystick);
   private GoToAngleSmart m_retractArm = new GoToAngleSmart(m_arm, 1.5, m_secondJoystick);
 
   //Elevator + Arm Scoring Parallel Groups
@@ -195,17 +195,16 @@ public class RobotContainer {
 
   private ScoreHighAuto m_simpleHighAuto = new ScoreHighAuto(m_arm, m_elevator, m_rollerIntake, m_drivetrain, 0);
   private ScoreHighAuto m_highScoreAutoShort = new ScoreHighAuto(m_arm, m_elevator, m_rollerIntake, m_drivetrain, Config.kTimeInSecsFast);
+  
   // private Limelight m_limelight = new Limelight();
   // private Turret m_turret = new Turret();
   // private TrackTarget m_track = new TrackTarget(m_limelight, m_turret);
   // private TestServo m_test = new TestServo(m_turret);
   
-  // Joystick buttons
   // private DriveForward m_driveForward = new DriveForward(m_drivetrain, m_forwardButton);
 
   private SendableChooser<Boolean> m_pipeChooser = new SendableChooser<>();
 
-  
   // private GyroBalance m_balance = new GyroBalance(m_drivetrain);
 
   // for testing
@@ -296,4 +295,15 @@ public class RobotContainer {
     // m_encoderTest.schedule(); 
     return null;
   }
+
+  public void setTestCoastMode() {
+    m_rollerIntake.setCoastMode();
+    m_arm.setCoastMode();
+  }
+
+  public void setTestBrakeMode() {
+    m_rollerIntake.setBrakeMode();
+    m_arm.setBrakeMode();
+  }
+
 }

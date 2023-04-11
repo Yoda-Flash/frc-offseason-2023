@@ -42,6 +42,16 @@ public class RollerIntake extends SubsystemBase {
     m_cubeIntakeMotor.burnFlash();
   }
 
+  public void setCoastMode() {
+    m_coneIntakeMotor.setIdleMode(IdleMode.kCoast);
+    m_cubeIntakeMotor.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void setBrakeMode() {
+    m_coneIntakeMotor.setIdleMode(IdleMode.kBrake);
+    m_cubeIntakeMotor.setIdleMode(IdleMode.kBrake);
+  }
+
   public void setConeForward(){
     m_coneIntakeMotor.set(Config.kIntakeSpeed);
   }

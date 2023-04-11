@@ -28,7 +28,7 @@ public class ScoreHighAuto extends SequentialCommandGroup {
     addCommands(
       new ReleaseArm(arm),
       new RecalibrateArm(arm),
-      new ParallelRaceGroup(new GoToAngleSmart(arm, 64), new ExtendElevatorSmart(elevator, -59), new WaitCommand(3.0)), //ISSUE HERE
+      new ParallelRaceGroup(new GoToAngleSmart(arm, 63), new ExtendElevatorSmart(elevator, -59), new ParallelCommandGroup(new WaitCommand(2.85), new RunIntakeIn(rollerIntake))),
       new ParallelCommandGroup(new MoveForTime(drivetrain, 0.6, true), new RunIntakeIn(rollerIntake)), //MAKE SAME TIME AS BACK
       new WaitCommand(0.1),
       new RunIntakeOut(rollerIntake),

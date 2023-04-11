@@ -36,6 +36,19 @@ public class Arm extends SubsystemBase {
     
    m_armMotor.getEncoder().setPositionConversionFactor(1.0);
    m_armMotor.getEncoder().setVelocityConversionFactor(1.0);
+
+   m_armMotor.setIdleMode(IdleMode.kBrake);
+   m_armMotor.setSmartCurrentLimit(40, 40);
+
+   m_armMotor.burnFlash();
+  }
+
+  public void setCoastMode() {
+    m_armMotor.setIdleMode(IdleMode.kCoast);
+  }
+  
+  public void setBrakeMode() {
+    m_armMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public boolean getLowerLimit(){
